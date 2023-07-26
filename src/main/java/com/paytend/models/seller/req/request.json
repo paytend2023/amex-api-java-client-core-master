@@ -1,0 +1,141 @@
+{
+  "se_setup_request_count": 1,
+  "message_id": "X100MSGAPI1",
+  "se_setup_requests": [
+    {
+      "record_number": "001",
+      "participant_se": "1230001001",
+      "submitter_id": "SUBMITTER001",
+      "se_detail_status_code": "R",
+      "se_status_code_change_date": "2020/10/31",
+      "language_preference_code": "EN",
+      "japan_credit_bureau_indicator": "",
+      "marketing_indicator": "Y",
+      "ownership_type_indicator": "D",
+      "seller_transacting_indicator": "Y",
+      "client_defined_code": "36500",
+      "seller": {
+        "seller_id": "SAMPLESELLERID1015",
+        "seller_url": "WWW.DEVELOPER.AMERICANEXPRESS.COM/SAMPLE",
+        "seller_status": "02",
+        "seller_mcc": "7996",
+        "seller_legal_name": "SAMPLE LEGAL NAME 1",
+        "seller_dba_name": "SAMPLE DBA NAME 1",
+        "seller_business_registration_number": "301235511",
+        "seller_business_phone_number": "8005284800",
+        "seller_email_address": "TEAMEMAIL@SAMPLEMERCHANT.COM",
+        "seller_currency_code": "USD",
+        "seller_start_date": "1984/01/20",
+        "seller_term_date": "2020/10/31",
+        "seller_charge_volume": "0000000000000101",
+        "seller_transaction_count": "100",
+        "seller_chargeback_count": "2",
+        "seller_chargeback_amount": "0000000000001000",
+        "seller_street_address": {
+          "address_line_1": "200 VESEY ST",
+          "address_line_2": "SELLERSTADDLN2001",
+          "address_line_3": "SELLERSTADDLN3001",
+          "address_line_4": "SELLERSTADDLN4001",
+          "address_line_5": "SELLERSTADDLN5001",
+          "city_name": "NEW YORK",
+          "region_code": "NY",
+          "postal_code": "10285",
+          "country_code": "US"
+        }
+      },
+      "significant_owners": {
+        "first_owner": {
+          "first_name": "C.F.",
+          "last_name": "FROST",
+          "date_of_birth": "1984/01/20",
+          "street_address": {
+            "address_line_1": "18850 N 56TH ST",
+            "address_line_2": "FOSTADDLN2001",
+            "address_line_3": "FOSTADDLN3001",
+            "address_line_4": "FOSTADDLN4001",
+            "address_line_5": "FOSTADDLN5001",
+            "city_name": "PHOENIX",
+            "region_code": "AZ",
+            "postal_code": "85050",
+            "country_code": "US"
+          }
+        },
+        "second_owner": {
+          "first_name": "SECONDOFIRSTNM001",
+          "last_name": "SECONDOLASTNM001",
+          "identification_number": "916204293",
+          "date_of_birth": "1984/01/20",
+          "street_address": {
+            "address_line_1": "3434 N 50th STREET",
+            "address_line_2": "SECONDOSTADDLN2001",
+            "address_line_3": "SECONDOSTADDLN3001",
+            "address_line_4": "SECONDOSTADDLN4001",
+            "address_line_5": "SECONDOSTADDLN5001",
+            "city_name": "NEW YORK",
+            "region_code": "NY",
+            "postal_code": "10103",
+            "country_code": "US"
+          }
+        },
+        "third_owner": {
+          "first_name": "THIRDOFIRSTNM001",
+          "last_name": "THIRDOLASTNM001",
+          "identification_number": "809077527",
+          "date_of_birth": "1984/01/20",
+          "street_address": {
+            "address_line_1": "4479 N 50th STREET",
+            "address_line_2": "THIRDOSTADDLN2001",
+            "address_line_3": "THIRDOSTADDLN3001",
+            "address_line_4": "THIRDOSTADDLN4001",
+            "address_line_5": "THIRDOSTADDLN5001",
+            "city_name": "NEW YORK",
+            "region_code": "NY",
+            "postal_code": "10103",
+            "country_code": "US"
+          }
+        },
+        "fourth_owner": {
+          "first_name": "FOURTHOFIRSTNM001",
+          "last_name": "FORUTHOLASTNM001",
+          "identification_number": "368591149",
+          "date_of_birth": "1984/01/20",
+          "street_address": {
+            "address_line_1": "9283 N 50th STREET",
+            "address_line_2": "FOURTHOSTADDLN2001",
+            "address_line_3": "FOURTHOSTADDLN3001",
+            "address_line_4": "FOURTHOSTADDLN4001",
+            "address_line_5": "FOURTHOSTADDLN5001",
+            "city_name": "NEW YORK",
+            "region_code": "NY",
+            "postal_code": "10103",
+            "country_code": "US"
+          }
+        }
+      },
+      "authorized_signer": {
+        "first_name": "AUSGNFIRSTNM001",
+        "last_name": "AUSGNLASTNM001",
+        "identification_number": "672659926",
+        "date_of_birth": "1984/01/20",
+        "title": "CEO",
+        "street_address": {
+          "address_line_1": "6690 N 50th STREET",
+          "address_line_2": "AUTHSIGNSTREETADD2001",
+          "address_line_3": "AUTHSIGNSTREETADD3001",
+          "address_line_4": "AUTHSIGNSTREETADD4001",
+          "address_line_5": "AUTHSIGNSTREETADD5001",
+          "city_name": "NEW YORK",
+          "region_code": "NY",
+          "postal_code": "10103",
+          "country_code": "US"
+        }
+      },
+      "sale": {
+        "channel_indicator_code": "DS",
+        "channel_name": "DIRECT SALES",
+        "represent_id": "36500",
+        "iso_register_number": "0000036500"
+      }
+    }
+  ]
+}
