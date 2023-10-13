@@ -119,9 +119,9 @@ public class TestNCP9000 {
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
                         .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
-                        .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
-                        .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
-                        .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
+//                        .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
+//                        .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
+//                        .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
                         .acptEnvDataBuilder(acptEnvDataBuilder)
                         .build();
 
@@ -134,7 +134,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -203,7 +203,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -264,7 +264,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -332,7 +332,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -407,7 +407,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -481,7 +481,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -554,7 +554,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -625,7 +625,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -693,7 +693,7 @@ public class TestNCP9000 {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url,authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");

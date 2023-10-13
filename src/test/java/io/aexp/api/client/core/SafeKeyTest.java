@@ -3,6 +3,7 @@ package io.aexp.api.client.core;
 import cn.hutool.core.date.DateUtil;
 import com.paytend.models.trans.req.*;
 import com.paytend.models.trans.rsp.AuthorizationRsp;
+import io.aexp.api.client.core.utils.JsonUtility;
 import io.aexp.api.client.core.utils.XmlUtility;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,6 +15,9 @@ import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+/**
+ * 测试用例
+ */
 
 /**
  * validationPCO.getAEVVDecryptedData(aevvValue, pan, key)
@@ -175,7 +179,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         System.out.println("respStr:" + responseStr);
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
@@ -285,7 +289,9 @@ public class SafeKeyTest {
         Authorization authorization = factory.create();
         LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SK001 pan:{} amt:{} ", pan, amt);
         LOGGER.info("authorization:{}", authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        LOGGER.info("authorization:{}", authorization.toXml());
+        LOGGER.info("authorization:{}", JsonUtility.getJSONString(authorization));
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         LOGGER.info("responseStr:{}", responseStr);
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         LOGGER.info("response:{}", response);
@@ -398,7 +404,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
 
@@ -508,7 +514,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -618,7 +624,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -718,7 +724,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -804,7 +810,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -912,7 +918,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -1016,7 +1022,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -1127,7 +1133,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -1228,7 +1234,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -1268,7 +1274,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
 
 
@@ -1305,7 +1311,7 @@ public class SafeKeyTest {
 
         AuthorizationAdjustmentRequest request = adjustmentBuilder.build();
         System.out.println("request:" + request.toXMLString());
-        responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
+        responseStr = TransCommUtils.getTestInstance().sendXml(url, request, Header.defaultHeaders());
         System.out.println(responseStr);
         response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
 
@@ -1341,7 +1347,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        String responseStr = TransCommUtils.getTestInstance().sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         //reversal
@@ -1374,7 +1380,7 @@ public class SafeKeyTest {
 
         long pan = 374500261001009L;
         long amt = 1600;
-        String originalTransId="000002533592180";
+        String originalTransId = "000002533592180";
         String tmp = "000000" + new Random().nextLong();
 
         String responseStr;
@@ -1390,7 +1396,7 @@ public class SafeKeyTest {
         authorizationBuilder.TransProcCd("200000");
         Authorization request = refundFactory.create();
         LOGGER.info(" refund>>>>> {}", request.toXMLString());
-        responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
+        responseStr = TransCommUtils.getTestInstance().sendXml(url, request, Header.defaultHeaders());
         LOGGER.info(" refund>>>>> {}", responseStr);
         response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         LOGGER.info(" refund>>>>> {}", response);

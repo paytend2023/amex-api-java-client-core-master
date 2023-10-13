@@ -2,6 +2,7 @@ package com.paytend.models.trans.req;
 
 import com.paytend.models.trans.XmlRequest;
 import io.aexp.api.client.core.utils.XmlUtility;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -17,26 +18,31 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author gudongyang
  */
+@Slf4j
 public class TransCommUtils {
+
+
+    private static TransCommUtils testComm;
+    private static TransCommUtils proComm;
+
+    final private static Character lock = '1';
 
     private static Map<String, String> headers = new HashMap<>();
 
-    private TransCommUtils() {
-    }
 
-    private static OkHttpClient httpClient;
+    private OkHttpClient httpClient;
 
-    static {
+    private TransCommUtils(String fileName, String pwd) {
         KeyStore keyStore = null;
         try {
-            keyStore = loadKeyStore("keystore.jks", "111111");
+            keyStore = loadKeyStore(fileName, pwd);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         SSLContext sslContext = null;
         try {
-            sslContext = createSSLContext(keyStore, "111111");
+            sslContext = createSSLContext(keyStore, pwd);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,50 +66,54 @@ public class TransCommUtils {
 
         headers.put("Content-Type", "plain/text");
         headers.put("User-Agent", "Application;");
-        headers.put("Cashe-Control", "no-cache");
+        headers.put("Cache-Control", "no-cache");
         headers.put("Connection", "Keep-Alive");
+    }
+
+
+    public static TransCommUtils getTestInstance() {
+
+        if (testComm == null) {
+            synchronized (lock) {
+                testComm = new TransCommUtils("keystore.jks", "111111");
+            }
+        }
+
+        return testComm;
+    }
+
+    public static TransCommUtils getProInstance() {
+
+        if (testComm == null) {
+            synchronized (lock) {
+                testComm = new TransCommUtils("keystore_pro.jks", "111111");
+            }
+        }
+        return testComm;
     }
 
     private static final MediaType TEXT_MEDIA_TYPE = MediaType.parse("plain/text;");
 
 
-    public static String toRequestString(String xml) {
+    public String toRequestString(String xml) {
         return "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml);
     }
 
-//    public static String sendXml(String xml, Map<String, String> customHeaders) throws Exception {
-//        HttpUrl httpUrl = HttpUrl.parse(baseUrl);
-//        HttpUrl.Builder httpUrlBuilder = httpUrl.newBuilder();
-//        Request.Builder builder = new Request.Builder()
-//                .url(httpUrlBuilder.build())
-//                .post(RequestBody.create(TEXT_MEDIA_TYPE, toRequestString(xml)));
-//        for (Map.Entry<String, String> header : headers.entrySet()) {
-//            System.out.println(header.getKey() + " = " + header.getValue());
-//            builder.addHeader(header.getKey(), header.getValue());
-//        }
-//        for (Map.Entry<String, String> header : customHeaders.entrySet()) {
-//            System.out.println(header.getKey() + " = " + header.getValue());
-//            builder.addHeader(header.getKey(), header.getValue());
-//        }
-//
-//        Request request = builder.build();
-//        Response response = httpClient.newCall(request).execute();
-//        String tmp = response.body().string();
-//        System.out.println("" + response.code());
-//        System.out.println(XmlUtility.getInstance().xmlBeautifulFormat(tmp));
-//        return tmp;
-//    }
 
-    public static String sendXml(String url, XmlRequest xmlRequest, Map<String, String> customHeaders) throws Exception {
+    public String sendXml(String url, XmlRequest xmlRequest, Map<String, String> customHeaders) throws Exception {
         HttpUrl httpUrl = HttpUrl.parse(url);
         HttpUrl.Builder httpUrlBuilder = httpUrl.newBuilder();
+        String xml = xmlRequest.toXml();
+        log.info("url:{}\n {} ", url, xml);
         Request.Builder builder = new Request.Builder()
                 .url(httpUrlBuilder.build())
-                .post(RequestBody.create(TEXT_MEDIA_TYPE, xmlRequest.toXml()));
+                .post(RequestBody.create(TEXT_MEDIA_TYPE, xml));
         for (Map.Entry<String, String> header : headers.entrySet()) {
+            System.out.println(header.getKey() + " = " + header.getValue());
             builder.addHeader(header.getKey(), header.getValue());
         }
         for (Map.Entry<String, String> header : customHeaders.entrySet()) {
+            System.out.println(header.getKey() + " = " + header.getValue());
             builder.addHeader(header.getKey(), header.getValue());
         }
 

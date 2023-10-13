@@ -81,7 +81,7 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchOpen, headersBatchAdmin);
         System.out.println("batchOpen:" + respXml);
 
         BatchAdminRequest batchPurge = BatchAdminRequest.builder()
@@ -94,7 +94,7 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        respXml = TransCommUtils.sendXml(url, batchPurge, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchPurge, headersBatchAdmin);
         System.out.println("purge:" + respXml);
 
         BatchAdminRequest batchStatus1 = BatchAdminRequest.builder()
@@ -107,7 +107,7 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        respXml = TransCommUtils.sendXml(url, batchStatus1, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchStatus1, headersBatchAdmin);
         System.out.println("batchStatus1:" + respXml);
 
         BatchAdminRequest batchClose = BatchAdminRequest.builder()
@@ -120,7 +120,7 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        respXml = TransCommUtils.sendXml(url, batchClose, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchClose, headersBatchAdmin);
         System.out.println("batchClose:" + respXml);
 
         BatchAdminRequest batchStatus2 = BatchAdminRequest.builder()
@@ -133,7 +133,7 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        respXml = TransCommUtils.sendXml(url, batchStatus2, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchStatus2, headersBatchAdmin);
         System.out.println("batchStatus2:" + respXml);
     }
 
@@ -153,7 +153,7 @@ public class BatchAdminRequestTest {
                 .SubmitterCode(submitterCode)
                 .build();
         LOGGER.info("batchOpen:{}", batchOpen.toXml());
-        respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchOpen, headersBatchAdmin);
         BatchResp batchResp = BatchResp.createByXml(respXml);
         LOGGER.info("batchOpenResp:{}", batchResp);
         Assert.assertEquals("000", batchResp.getBatchStatus());
@@ -177,7 +177,7 @@ public class BatchAdminRequestTest {
                 .SubmitterCode(submitterCode)
                 .build();
         LOGGER.info("BatchDataClose:{}", batchClosed.toXml());
-        respXml = TransCommUtils.sendXml(url, batchClosed, headersBatchAdmin);
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchClosed, headersBatchAdmin);
         LOGGER.info("BatchDataCloseResp:{}", respXml);
         BatchResp batchResp = BatchResp.createByXml(respXml);
         Assert.assertEquals("001", batchResp.getBatchStatus());

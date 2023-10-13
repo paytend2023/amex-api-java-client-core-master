@@ -26,13 +26,13 @@ import java.util.Objects;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author Sunny
- * @create 2023/8/24 13:49
+ *
+ *  生产环境进件
  */
 public class ProSMTest {
 
     private ConfigurationProvider configurationProvider;
-    private static final String propertiesFileName = "qa.test.properties";
+    private static final String propertiesFileName = "pro.properties";
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
     private OkHttpClient httpClient;
     private String baseUrl;
@@ -113,7 +113,9 @@ public class ProSMTest {
         String method = "POST";
         List<SeSetupRequest> list = new ArrayList<>();
         SePayLoadRequest.SePayLoadRequestBuilder sePayLoadRequestBuilder = SePayLoadRequest.builder();
-        sePayLoadRequestBuilder.seSetupRequestCount(1).messageId("2023082400000001").seSetupRequests(list);
+        //20230925000000001
+        //20230925000000001
+        sePayLoadRequestBuilder.seSetupRequestCount(1).messageId("202309250000001").seSetupRequests(list);
         SeSetupRequest.SeSetupRequestBuilder seSetupBuilder = createSeSetupRequestBuilder("001",
                 "",
                 "",
@@ -124,6 +126,7 @@ public class ProSMTest {
 
         JsonUtility jsonUtility = JsonUtility.getInstance();
         String json = jsonUtility.getString(sePayLoadRequestBuilder.build());
+        System.out.println(url);
         System.out.println(json);
         String respStr = submitPostRequest(url, authProvider.generateAuthHeaders(json, url, method), json);
         SellerResponse response = jsonUtility.getObject(respStr, SellerResponse.class);
@@ -138,7 +141,7 @@ public class ProSMTest {
                                                                              Seller.SellerBuilder sellerBuilder) {
         SeSetupRequest.SeSetupRequestBuilder seSetupBuilder = SeSetupRequest.builder();
         seSetupBuilder.recordNumber(recordNumber)
-                .participantSe("8127921740")
+                .participantSe("8127478295")
 //                .submitterId("SUBMITTER001")
                 .seDetailStatusCode(detailStatusCode)
                 .seStatusCodeChangeDate(statusCodeChangeDate)

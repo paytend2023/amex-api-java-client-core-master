@@ -1,0 +1,71 @@
+https://apigateway2sma.americanexpress.com/merchant/v1/acquisitions/sellers
+{
+  "se_setup_request_count" : 1,
+  "message_id" : "202309250000001",
+  "se_setup_requests" : [ {
+    "record_number" : "001",
+    "participant_se" : "8127478295",
+    "se_detail_status_code" : "",
+    "se_status_code_change_date" : "",
+    "language_preference_code" : "EN",
+    "marketing_indicator" : "N",
+    "ownership_type_indicator" : "D",
+    "seller" : {
+      "seller_id" : "900000000000001",
+      "seller_url" : "www.paytend.com",
+      "seller_status" : "02",
+      "seller_mcc" : "7996",
+      "seller_legal_name" : "PAYTEND EUROPE UAB",
+      "seller_dba_name" : "PAYTEND EUROPE UAB",
+      "seller_business_phone_number" : "37061088300",
+      "seller_email_address" : "fxx@paytend.COM",
+      "seller_currency_code" : "EUR",
+      "seller_start_date" : "2017/12/11",
+      "seller_term_date" : "2099/12/11",
+      "seller_street_address" : {
+        "city_name" : "Vilnius City",
+        "region_code" : "58",
+        "postal_code" : "01113",
+        "country_code" : "LT",
+        "address_line_1" : "Vilnius City Butchery 5"
+      }
+    },
+    "significant_owners" : {
+      "first_owner" : {
+        "first_name" : "Junqing",
+        "last_name" : "Li",
+        "date_of_birth" : "1980/05/03",
+        "street_address" : {
+          "city_name" : "Zhangjiakou",
+          "postal_code" : "075000",
+          "country_code" : "CN",
+          "address_line_1" : "31 Sancun,",
+          "address_line_2" : "Yuxian county,"
+        }
+      }
+    },
+    "authorized_signer" : {
+      "first_name" : "Junqing",
+      "last_name" : "Li",
+      "date_of_birth" : "1980/05/03",
+      "street_address" : {
+        "city_name" : "Zhangjiakou",
+        "postal_code" : "075000",
+        "country_code" : "CN",
+        "address_line_1" : "31 Sancun,",
+        "address_line_2" : "Yuxian county,"
+      },
+      "title" : "CEO"
+    },
+    "sale" : {
+      "channel_indicator_code" : "DS",
+      "channel_name" : "DIRECT SALES"
+    }
+  } ]
+}
+x-amex-request-id = bdc5b41c-3299-4261-a162-29b3233caf77
+x-amex-api-key = mxEF9jNvLtSZ8dxoK6BNNtHqOH3Aurvq
+Authorization = MAC id="mxEF9jNvLtSZ8dxoK6BNNtHqOH3Aurvq",ts="1695628600799",nonce="4693ecb6-8ac2-4d2a-8ed3-500220a6b233",bodyhash="5cg3oJCJqHzs+T+oHpTJEiI+rSDrB3NTJFTV7RbddtY=",mac="jKRYxPapQ2i3HQKTOodFFPUAsmrz4n1LxfFvH6Q+vD8="
+Response: {"message_id":"202309250000001","number_of_setups_processed":1,"number_of_setups_with_warnings":0,"number_of_setups_with_errors":0,"se_setup_error_details":[{"submission_se":"8127478295","seller_id":"900000000000001"}]}
+200
+SellerResponse(messageId=202309250000001, numberOfSetupsProcessed=1, numberOfSetupsWithWarnings=0, numberOfSetupsWithErrors=0, seSetupErrorDetails=[SeSetupErrorDetail(submissionSe=8127478295, sellerId=900000000000001, errors=null, warnings=null)])

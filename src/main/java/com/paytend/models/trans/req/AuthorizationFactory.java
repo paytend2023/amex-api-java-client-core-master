@@ -33,7 +33,7 @@ public class AuthorizationFactory {
 
     public Authorization create() {
         Authorization.AuthorizationBuilder authorizationBuilder = config.authorizationBuilder;
-        if (Objects.nonNull(config.cardAcceptorDetailBuilder)) {
+        if (Objects.nonNull(config.cardAcceptorIdentificationBuilder)) {
             authorizationBuilder.CardAcceptorIdentification(config.cardAcceptorIdentificationBuilder.build());
         }
         if (Objects.nonNull(config.cardAcceptorDetailBuilder)) {

@@ -82,7 +82,7 @@ public class DataCaptureTest {
                 .build();
 
         LOGGER.info("dataCaptureRequest:{}", dataCaptureRequest.toXml());
-        String respXml = TransCommUtils.sendXml(url, dataCaptureRequest, dataCaptureHeaders);
+        String respXml = TransCommUtils.getTestInstance().sendXml(url, dataCaptureRequest, dataCaptureHeaders);
         LOGGER.info("dataCaptureResponse:{}", respXml);
 
     }
