@@ -1,6 +1,7 @@
 package com.paytend.models.trans.rsp;
 
 import com.paytend.models.trans.req.Authorization;
+import com.paytend.models.trans.req.BaseFields;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +14,7 @@ import lombok.experimental.Tolerate;
 @Getter
 @Setter
 @ToString
-public class AuthorizationRsp extends Authorization {
+public class AuthorizationRsp extends BaseFields {
 
     /**
      * bit 38

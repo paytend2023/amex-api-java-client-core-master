@@ -19,8 +19,9 @@ import lombok.experimental.Tolerate;
  * • Global — All regions
  * • Mandatory—PaymentFacilitators,OptBlueParticipants and Bill Payment Providers
  * • Mandatory—PaymentTokentransactionswheretheToken Requester ID (TRID) is requested
- * • Mandatory—WhenNationalIDvalueisrequired
- * • Conditional—Transactionoriginatedusingamobiledevice • Notused—Allothertransactions
+ * • Mandatory—When National ID value isrequired
+ * • Conditional—Transaction originated using a mobile device
+ * • Not used—All other transactions
  * Global — All regions
  * Mandatory — Third Party Processors, OptBlue Participants, Bill Payment Providers and/or Vendors must be certified to
  * pass data in the sub-elements related to this container element. After certification, all Merchant-provided data must be forwarded.

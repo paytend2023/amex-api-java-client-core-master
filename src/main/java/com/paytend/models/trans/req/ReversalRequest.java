@@ -1,24 +1,17 @@
 package com.paytend.models.trans.req;
 
-
+import cn.hutool.core.bean.BeanUtil;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.paytend.models.trans.XmlRequest;
 import io.aexp.api.client.core.utils.XmlUtility;
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-import lombok.experimental.Tolerate;
 
 /**
- * @author gudongyang
+ * @author Sunny
+ * @create 2023/8/25 15:16
  */
-@SuperBuilder
-@Getter
-@Setter
 @JacksonXmlRootElement(localName = "CardTransaction")
 @JsonPropertyOrder(
         {
@@ -58,37 +51,26 @@ import lombok.experimental.Tolerate;
                 "PaymentAcctData",
                 "AcptEnvData"
         })
-
-
-public class Authorization extends BaseFields implements XmlRequest {
-
+@Setter
+@Getter
+public class ReversalRequest extends BaseFields implements XmlRequest {
 
     /**
-     * bit 62
+     * Description:
+     * Note: This requirement applies to the container element and all related sub-elements.
+     * This container element holds the sub-elements listed in the following example;
+     * and the sub-elements must contain the same values used in the original Authorization Request (1100) message.
      */
-    @Setter(AccessLevel.NONE)
-    private ValidationInformation62 ValidationInformation;
-    /**
-     * bit 63
-     * todo
-     */
-    @JacksonXmlProperty(localName = "ValidationInformation")
-    @Setter(AccessLevel.NONE)
-    private VerificationInformation63 ValidationInformation63;
-
-
-    @Tolerate
-    public Authorization() {
-    }
-
-    public String toXMLString() {
-        return XmlUtility.getInstance().getString(this);
-    }
-
+    OriginalDataElements OriginalDataElements;
 
     @Override
     public String toXml() {
         String xml = XmlUtility.getInstance().getString(this);
         return "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml);
+    }
+
+    public ReversalRequest(OriginalDataElements originalDataElements, Authorization authorization) {
+        BeanUtil.copyProperties(authorization, this);
+        this.OriginalDataElements = originalDataElements;
     }
 }

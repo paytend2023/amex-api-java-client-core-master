@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -172,6 +173,7 @@ public class SafeKeyTest {
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
         String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        System.out.println("respStr:" + responseStr);
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -1228,44 +1230,167 @@ public class SafeKeyTest {
     }
 
 
+    /**
+     * 授权 和授权调整
+     *
+     * @throws Exception
+     */
     @Test
-    public void testReadXml() {
-        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CardTransaction>\n" +
-                "    <MsgTypId>1110</MsgTypId>\n" +
-                "    <CardNbr>374500262001008</CardNbr>\n" +
-                "    <TransProcCd>004000</TransProcCd>\n" +
-                "    <TransAmt>2100</TransAmt>\n" +
-                "    <MerSysTraceAudNbr>657820</MerSysTraceAudNbr>\n" +
-                "    <TransTs>230729211051</TransTs>\n" +
-                "    <TransId>000002490544093</TransId>\n" +
-                "    <RtrvRefNbr>230729211051</RtrvRefNbr>\n" +
-                "    <TransAprvCd>544093</TransAprvCd>\n" +
-                "    <MerTrmnlId>00000001</MerTrmnlId>\n" +
-                "    <CardAcceptorIdentification>\n" +
-                "        <MerId>8127921740</MerId>\n" +
-                "    </CardAcceptorIdentification>\n" +
-                "    <TransCurrCd>978</TransCurrCd>\n" +
-                "    <TransActCd>000</TransActCd>\n" +
-                "    <AcptEnvData>\n" +
-                "        <Psd2Exemptions>\n" +
-                "            <EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd>\n" +
-                "            <AuthOutageInd>0</AuthOutageInd>\n" +
-                "        </Psd2Exemptions>\n" +
-                "        <InitPartyInd>1</InitPartyInd>\n" +
-                "    </AcptEnvData>\n" +
-                "    <SecureAuthenticationSafeKey>\n" +
-                "        <ScndIdCd>ASK</ScndIdCd>\n" +
-                "        <AEVVRsltInd>3</AEVVRsltInd>\n" +
-                "    </SecureAuthenticationSafeKey>\n" +
-                "    <VerificationInformation>\n" +
-                "        <ServId>AX</ServId>\n" +
-                "        <ReqTypId>AE</ReqTypId>\n" +
-                "    </VerificationInformation>\n" +
-                "</CardTransaction>";
+    public void testSK00AndAdjustment() throws Exception {
+        AuthorizationFactory.AuthorizationConfig config =
+                AuthorizationFactory.AuthorizationConfig.builder()
+                        .authorizationBuilder(authorizationBuilder)
+                        .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
+                        .secureAuthenticationSafeKeyBuilder(secureAuthenticationSafeKeyBuilder)
+                        .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
+                        .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
+                        .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
+                        .acptEnvDataBuilder(acptEnvDataBuilder)
+                        .build();
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
 
-        AuthorizationRsp response = XmlUtility.getInstance().readFromXML(xml, AuthorizationRsp.class);
-        System.out.println(response.toString());
-        System.out.println(response.getAcptEnvData().toString());
+        long pan = 374500261001009L;
+        pan = 376701078252003L;
+        long amt = 1101;
+
+        String tmp = String.valueOf(System.currentTimeMillis() - pan);
+        tmp = DateUtil.format(new Date(), "yyyyMMddHHmmss");
+        authorizationBuilder.CardNbr(String.valueOf(pan))
+                .TransAmt(String.valueOf(amt))
+                .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
+        AuthorizationFactory factory = new AuthorizationFactory(config);
+        Authorization authorization = factory.create();
+        System.out.println(authorization.toXMLString());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
+
+
+        OriginalDataElements originalDataElements = OriginalDataElements.builder()
+                .MsgTypId("1100")
+                .MerSysTraceAudNbr(response.getMerSysTraceAudNbr())
+                .TransTs(response.getTransTs())
+                .AcqInstIdCd(response.getAcqInstIdCd())
+                .build();
+        AuthorizationAdjustmentRequest.AuthorizationAdjustmentRequestBuilder
+                adjustmentBuilder = AuthorizationAdjustmentRequest.builder()
+                .MsgTypId("1220")
+                .CardNbr(String.valueOf(pan))
+                .TransProcCd("220000")
+                .TransAmt(String.valueOf(100))
+                .MerSysTraceAudNbr(Optional.of(String.valueOf(System.currentTimeMillis() - pan)).map((t) -> t.substring(t.length() - 6)).get())
+                .TransTs(DateUtil.format(new Date(), "yyMMddHHmmss"))
+                .AcqInstCtryCd("276")
+                .FuncCd("202")
+                .MsgRsnCd("1234")
+                .MerCtgyCd("4111")
+                .OrigTransAmt(Optional.of(response.getTransAmt()).map((l) -> {
+                    String str = ("000000000000" + l);
+                    return str.substring(str.length() - 12) + "000000000000";
+                }).get())
+                .TransId(response.getTransId())
+//                .RtrvRefNbr(DateUtil.format(new Date(), "yyyyMMddHHmmss").substring(2))
+//                .MerTrmnlId("00000001")
+                .TransCurrCd("978")
+                .OriginalDataElements(originalDataElements)
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .CardAcceptorIdentification(cardAcceptorIdentificationBuilder.build())
+                .PointOfServiceData(pointOfServiceDataBuilder.build());
+
+        AuthorizationAdjustmentRequest request = adjustmentBuilder.build();
+        System.out.println("request:" + request.toXMLString());
+        responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
+        System.out.println(responseStr);
+        response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
+
+
+    }
+
+    //授权 并且冲正
+    @Test
+    public void testSK00AndReversal() throws Exception {
+        AuthorizationFactory.AuthorizationConfig config =
+                AuthorizationFactory.AuthorizationConfig.builder()
+                        .authorizationBuilder(authorizationBuilder)
+                        .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
+                        .secureAuthenticationSafeKeyBuilder(secureAuthenticationSafeKeyBuilder)
+                        .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
+                        .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
+                        .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
+                        .acptEnvDataBuilder(acptEnvDataBuilder)
+                        .build();
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
+
+        long pan = 374500261001009L;
+        pan = 376701078252003L;
+        long amt = 1101;
+
+        String tmp = String.valueOf(System.currentTimeMillis() - pan);
+        tmp = DateUtil.format(new Date(), "yyyyMMddHHmmss");
+        authorizationBuilder.CardNbr(String.valueOf(pan))
+                .TransAmt(String.valueOf(amt))
+                .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
+        AuthorizationFactory factory = new AuthorizationFactory(config);
+        Authorization authorization = factory.create();
+        System.out.println(authorization.toXMLString());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
+        System.out.println(response);
+        //reversal
+
+
+    }
+
+
+    /**
+     * 授权 和授权调整
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRefund() throws Exception {
+
+        long pan = 374500261001009L;
+        pan = 376701078252003L;
+        String tmp = String.valueOf(System.currentTimeMillis() - pan);
+        tmp = DateUtil.format(new Date(), "yyyyMMddHHmmss");
+        AuthorizationFactory.AuthorizationConfig refundConfig =
+                AuthorizationFactory.AuthorizationConfig.builder()
+                        .authorizationBuilder(authorizationBuilder)
+                        .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
+                        .secureAuthenticationSafeKeyBuilder(secureAuthenticationSafeKeyBuilder)
+                        .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
+                        .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
+                        .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
+                        .acptEnvDataBuilder(acptEnvDataBuilder)
+                        .build();
+
+
+
+
+
+        AuthorizationFactory refundFactory = new AuthorizationFactory(refundConfig);
+
+        authorizationBuilder.CardNbr(String.valueOf(pan))
+                .TransAmt(String.valueOf(10))
+                .NatlUseData(NatlUseData.builder()
+                        .OriginalTransId("000002523903545")
+                        .build())
+                .MerSysTraceAudNbr(Optional.of(System.currentTimeMillis() + "").map((s) -> s.substring(s.length() - 6)).get());
+
+
+
+        authorizationBuilder.TransProcCd("200000");
+        Authorization request = refundFactory.create();
+        System.out.println("request:" + request.toXMLString());
+        String responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
+        System.out.println(responseStr);
+        AuthorizationRsp response;
+        response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
+        System.out.println(response);
 
     }
 }

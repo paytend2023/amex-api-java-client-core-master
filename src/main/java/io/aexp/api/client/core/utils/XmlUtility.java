@@ -27,6 +27,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
 /**
  * @author gudongyang
@@ -46,6 +47,7 @@ public class XmlUtility {
                 .serializationInclusion(NON_NULL)
                 .configure(MapperFeature.SORT_CREATOR_PROPERTIES_FIRST, true)
                 .configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false)
+                .disable(FAIL_ON_EMPTY_BEANS)
                 .build();
         xmlMapper.getFactory().getXMLOutputFactory().setProperty("javax.xml.stream.isRepairingNamespaces", false);
     }

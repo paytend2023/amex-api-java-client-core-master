@@ -1,25 +1,24 @@
 package com.paytend.models.trans.req;
 
-
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.google.errorprone.annotations.SuppressPackageLocation;
 import com.paytend.models.trans.XmlRequest;
 import io.aexp.api.client.core.utils.XmlUtility;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import lombok.experimental.Tolerate;
 
 /**
- * @author gudongyang
+ * @author Sunny
+ * @create 2023/8/26 10:14
  */
-@SuperBuilder
+
 @Getter
 @Setter
 @JacksonXmlRootElement(localName = "CardTransaction")
+@SuperBuilder
 @JsonPropertyOrder(
         {
                 "MsgTypId",
@@ -28,7 +27,6 @@ import lombok.experimental.Tolerate;
                 "TransAmt",
                 "XmitTs",
                 "TransTs",
-                "CardEffDt",
                 "AcqInstCtryCd",
                 "PointOfServiceData",
                 "FuncCd",
@@ -58,33 +56,37 @@ import lombok.experimental.Tolerate;
                 "PaymentAcctData",
                 "AcptEnvData"
         })
-
-
-public class Authorization extends BaseFields implements XmlRequest {
+public class AuthorizationAdjustmentRequest extends BaseFields implements XmlRequest {
+    /**
+     * bit 30
+     * authorization adjustment 交易使用
+     * authorization 不用上送
+     * Data Length: 24 bytes, fixed
+     * <p>
+     * <p>
+     * Description: This data element contains the Original Transaction Amount that was previously approved by
+     * American Express.
+     * Positions 1-12 of this data element are the original transaction amount from Bit 4, TransAmt
+     * in the corresponding Authorization Response (1110) message.
+     * Positions 13-24 are zero filled and reserved for future use.
+     * This data element is mandatory for processing this message, and it will be preserved and returned in
+     * the response message without alteration
+     */
+    String OrigTransAmt;
 
 
     /**
-     * bit 62
+     * Description:
+     * Note: This requirement applies to the container element and all related sub-elements.
+     * This container element holds the sub-elements listed in the following example;
+     * and the sub-elements must contain the same values used in the original Authorization Request (1100) message.
      */
-    @Setter(AccessLevel.NONE)
-    private ValidationInformation62 ValidationInformation;
-    /**
-     * bit 63
-     * todo
-     */
-    @JacksonXmlProperty(localName = "ValidationInformation")
-    @Setter(AccessLevel.NONE)
-    private VerificationInformation63 ValidationInformation63;
+    OriginalDataElements OriginalDataElements;
 
-
-    @Tolerate
-    public Authorization() {
-    }
 
     public String toXMLString() {
         return XmlUtility.getInstance().getString(this);
     }
-
 
     @Override
     public String toXml() {

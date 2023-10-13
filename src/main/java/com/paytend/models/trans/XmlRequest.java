@@ -6,7 +6,9 @@ package com.paytend.models.trans;
  */
 public interface XmlRequest {
     /**
-     * @return 生成请求的xml
+     * 生成请求的xml
+     *
+     * @return xmlStr
      */
     String toXml();
 }
