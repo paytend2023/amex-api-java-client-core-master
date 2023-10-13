@@ -13,8 +13,7 @@ import lombok.experimental.Tolerate;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class AuthorizationRsp extends BaseFields {
+ public class AuthorizationRsp extends BaseFields {
 
     /**
      * bit 38
@@ -53,4 +52,14 @@ public class AuthorizationRsp extends BaseFields {
      */
     String transActCd;
 
+    @Override
+    public String toString() {
+        return "AuthorizationRsp{" +
+                "transAprvCd='" + transAprvCd + '\'' +
+                ", transActCd='" + transActCd + '\'' +
+                ", TransId='" + TransId + '\'' +
+                ", MerSysTraceAudNbr='" + MerSysTraceAudNbr + '\'' +
+
+                '}';
+    }
 }

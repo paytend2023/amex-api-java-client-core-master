@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * validationPCO.getAEVVDecryptedData(aevvValue, pan, key)
  * AEVV HEX Value                    = "0800980748123482785768480609560000000000"
@@ -40,7 +43,7 @@ import java.util.Random;
  */
 
 public class SafeKeyTest {
-
+    static final Logger LOGGER = LoggerFactory.getLogger(SafeKeyTest.class);
     //    headers.put("Host", baseUrl);
     private static String url = "https://qwww318.americanexpress.com/IPPayments/inter/CardAuthorization.do";
 
@@ -93,15 +96,15 @@ public class SafeKeyTest {
 
     CardNotPresentData.CardNotPresentDataBuilder
             cardNotPresentDataBuilder = CardNotPresentData.builder()
-            .CustEmailAddr("king.gu@gmail.com")
-            .CustHostServerNm("www.baidu.com")
-            .CustBrowserTypDescTxt("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)")
-            .ShipToCtryCd("440")
-            .ShipMthdCd("01")
-            .MerSKUNbr("TKDC315U")
-            .CustIPAddr("127.142.5.56")
-            .CustIdPhoneNbr("13651654626")
-            .CallTypId("61");
+            .custEmailAddr("king.gu@gmail.com")
+            .custHostServerNm("www.baidu.com")
+            .custBrowserTypDescTxt("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)")
+            .shipToCtryCd("440")
+            .shipMthdCd("01")
+            .merSKUNbr("TKDC315U")
+            .custIPAddr("127.142.5.56")
+            .custIdPhoneNbr("13651654626")
+            .callTypId("61");
 
     AcptEnvData.AcptEnvDataBuilder
             acptEnvDataBuilder = AcptEnvData.builder()
@@ -280,11 +283,12 @@ public class SafeKeyTest {
                 .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
-        System.out.println(authorization.toXMLString());
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SK001 pan:{} amt:{} ", pan, amt);
+        LOGGER.info("authorization:{}", authorization.toXMLString());
         String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
-        System.out.println(responseStr);
+        LOGGER.info("responseStr:{}", responseStr);
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
-        System.out.println(response);
+        LOGGER.info("response:{}", response);
     }
 
     /**
@@ -1366,39 +1370,29 @@ public class SafeKeyTest {
                         .build();
         secureAuthenticationSafeKeyBuilder
                 .AESKTransId("3132333435363738393031323334353637383930")
-        ;
+                .ElecComrceInd("05");
+
         long pan = 374500261001009L;
         long amt = 1600;
+        String originalTransId="000002533592180";
         String tmp = "000000" + new Random().nextLong();
-//        authorizationBuilder.CardNbr(String.valueOf(pan))
-//                .TransAmt(String.valueOf(amt))
-//                .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
-//        AuthorizationFactory factory = new AuthorizationFactory(config);
-////        Authorization authorization = factory.create();
-////        System.out.println(authorization.toXMLString());
-////        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
-////        System.out.println(responseStr);
-////        AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
-////
 
         String responseStr;
         AuthorizationRsp response;
-        System.out.println("====================================================");
-
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>> refund pan:{} amt:{} originalTransId:{}  ", pan, amt, originalTransId);
         AuthorizationFactory refundFactory = new AuthorizationFactory(config);
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
                 .MerSysTraceAudNbr(Optional.of(System.currentTimeMillis() + "").map((s) -> s.substring(s.length() - 6)).get())
-                .NatlUseData(NatlUseData.builder().OriginalTransId("000002529199380").build())
+                .NatlUseData(NatlUseData.builder().OriginalTransId(originalTransId).build())
         ;
 
         authorizationBuilder.TransProcCd("200000");
         Authorization request = refundFactory.create();
-        System.out.println("request:" + request.toXMLString());
+        LOGGER.info(" refund>>>>> {}", request.toXMLString());
         responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
-        System.out.println(responseStr);
+        LOGGER.info(" refund>>>>> {}", responseStr);
         response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
-        System.out.println(response);
-
+        LOGGER.info(" refund>>>>> {}", response);
     }
 }

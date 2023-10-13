@@ -1,0 +1,35 @@
+<configuration>
+
+    <!-- 定义按日期滚动的日志文件 appender -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 指定日志文件路径和名称 -->
+        <file>logs/logfile.log</file>
+
+        <!-- 定义日期滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 设置日志文件名格式，例如按每天滚动 -->
+            <fileNamePattern>logs/logfile%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!-- 设置最大历史日志文件数 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <!-- 定义日志消息的格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 定义控制台输出的 appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 定义日志级别 -->
+    <root level="info">
+        <appender-ref ref="ROLLING_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>

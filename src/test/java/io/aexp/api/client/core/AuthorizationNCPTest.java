@@ -264,15 +264,15 @@ public class AuthorizationNCPTest {
 
         authorizationBuilder.CardAcceptorDetail(cardAcceptorDetail);
         CardNotPresentData cardNotPresentData = CardNotPresentData.builder()
-                .CustEmailAddr("king.gu@gmail.com")
-                .CustHostServerNm("www.baidu.com")
-                .CustBrowserTypDescTxt("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)")
-                .ShipToCtryCd("440")
-                .ShipMthdCd("01")
-                .MerSKUNbr("TKDC315U")
-                .CustIPAddr("127.142.5.56")
-                .CustIdPhoneNbr("13651654626")
-                .CallTypId("61")
+                .custEmailAddr("king.gu@gmail.com")
+                .custHostServerNm("www.baidu.com")
+                .custBrowserTypDescTxt("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)")
+                .shipToCtryCd("440")
+                .shipMthdCd("01")
+                .merSKUNbr("TKDC315U")
+                .custIPAddr("127.142.5.56")
+                .custIdPhoneNbr("13651654626")
+                .callTypId("61")
                 .build();
 
         AdditionalDataNational additionalDataNational = AdditionalDataNational.builder()

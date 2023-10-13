@@ -7,6 +7,8 @@ import com.paytend.models.trans.req.TransCommUtils;
 import com.paytend.models.trans.rsp.BatchResp;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import java.util.Map;
  */
 public class BatchAdminRequestTest {
     String url = "https://qwww318.americanexpress.com/IPPayments/inter/CardAuthorization.do";
+    static final Logger LOGGER = LoggerFactory.getLogger(BatchAdminRequestTest.class);
 
     CardAcceptorDetail.CardAcceptorDetailBuilder
             cardAcceptorDetailBuilder = CardAcceptorDetail.builder()
@@ -136,8 +139,9 @@ public class BatchAdminRequestTest {
 
     @Test
     public void testBatchDataOpen() throws Exception {
-        int batchID = 100003;
+        int batchID = 100012;
         String respXml = null;
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> batchOpen:{}", batchID);
         BatchAdminRequest batchOpen = BatchAdminRequest.builder()
                 .Version(String.valueOf(version))
                 .MerId(merId)
@@ -148,10 +152,10 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
+        LOGGER.info("batchOpen:{}", batchOpen.toXml());
         respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
-        System.out.println("batchOpen:" + respXml);
         BatchResp batchResp = BatchResp.createByXml(respXml);
-        System.out.println("batchResp:" + batchResp);
+        LOGGER.info("batchOpenResp:{}", batchResp);
         Assert.assertEquals("000", batchResp.getBatchStatus());
         Assert.assertEquals(batchID + "", batchResp.getBatchID());
     }
@@ -159,9 +163,10 @@ public class BatchAdminRequestTest {
 
     @Test
     public void testBatchDataClose() throws Exception {
-        int batchID = 100003;
+        int batchID = 100012;
         String respXml = null;
-        BatchAdminRequest batchOpen = BatchAdminRequest.builder()
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> batchClose:{}", batchID);
+        BatchAdminRequest batchClosed = BatchAdminRequest.builder()
                 .Version(String.valueOf(version))
                 .MerId(merId)
                 .BatchID(String.valueOf(batchID))
@@ -171,10 +176,10 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
-        System.out.println("batchOpen:" + respXml);
+        LOGGER.info("BatchDataClose:{}", batchClosed.toXml());
+        respXml = TransCommUtils.sendXml(url, batchClosed, headersBatchAdmin);
+        LOGGER.info("BatchDataCloseResp:{}", respXml);
         BatchResp batchResp = BatchResp.createByXml(respXml);
-
         Assert.assertEquals("001", batchResp.getBatchStatus());
         Assert.assertEquals(String.valueOf(batchID), batchResp.getBatchID());
     }

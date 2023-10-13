@@ -16,6 +16,9 @@ import lombok.experimental.Tolerate;
 @SuperBuilder
 public class BaseFields {
 
+    /**
+     * bit 0
+     */
     protected String MsgTypId;
     /**
      * bit 2

@@ -1,0 +1,25 @@
+1
+Batch open,
+safekey transaction capture,
+Batch close,
+Batch open,
+debit transaction,
+the credit of same transaction,
+batch close
+
+
+2
+Batch open,
+submissions of debit transaction,
+submissions of the credit of same transaction
+( for credit the TransProcCd is 200000),
+batch close
+
+
+3
+Open batch,
+capture a debit transaction (TransProcCd is 000000 in submissions),
+close the batch.
+Then open a new batch,
+and capture the same debit transaction that you captured earlier( this time the TransProcCd is 200000 in submissions),
+close the batch.

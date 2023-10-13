@@ -1,0 +1,264 @@
+1 关闭上一个批次
+2 开新批次
+3 做授权交易
+4 做结算
+5 关闭批次
+6 开新批次
+7 做退货交易
+8 做退货结算
+9 关闭批次
+
+
+
+1 关闭上一个批次
+2 开新批次
+3 做授权交易
+
+
+
+1 关闭批次 100004
+batchOpen:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100004</BatchID>
+  <BatchStatus>001</BatchStatus>
+  <BatchStatusText>Close</BatchStatusText>
+</BatchAdminResponse>
+
+2 打开批次  100005
+batchOpen:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100005</BatchID>
+  <BatchStatus>000</BatchStatus>
+  <BatchStatusText>Open</BatchStatusText>
+</BatchAdminResponse>
+
+batchResp:BatchResp(version=12010000, merId=8127921740, merTrmnlId=00000001, batchID=100005, batchStatus=000, batchStatusText=Open)
+
+3 做授权交易 SK001
+<CardTransaction>
+  <MsgTypId>1100</MsgTypId>
+  <CardNbr>374500261001009</CardNbr>
+  <TransProcCd>004000</TransProcCd>
+  <TransAmt>1600</TransAmt>
+  <TransTs>230905131132</TransTs>
+  <AcqInstCtryCd>276</AcqInstCtryCd>
+  <PointOfServiceData>
+    <CardDataInpCpblCd>1</CardDataInpCpblCd>
+    <CardCptrCpblCd>0</CardCptrCpblCd>
+    <OprEnvirCd>0</OprEnvirCd>
+    <CardPresentCd>0</CardPresentCd>
+    <CardDataInpModeCd>1</CardDataInpModeCd>
+    <CardDataOpCpblCd>0</CardDataOpCpblCd>
+    <TrmnlOpCpblCd>1</TrmnlOpCpblCd>
+    <CMAuthnCpblCd>6</CMAuthnCpblCd>
+    <CMPresentCd>1</CMPresentCd>
+    <CMAuthnMthdCd>0</CMAuthnMthdCd>
+    <CMAuthnEnttyCd>0</CMAuthnEnttyCd>
+    <PINCptrCpblCd>0</PINCptrCpblCd>
+  </PointOfServiceData>
+  <FuncCd>100</FuncCd>
+  <MsgRsnCd>1900</MsgRsnCd>
+  <MerCtgyCd>4111</MerCtgyCd>
+  <RtrvRefNbr>230905131132</RtrvRefNbr>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <CardAcceptorIdentification>
+    <MerId>8127921740</MerId>
+  </CardAcceptorIdentification>
+  <CardAcceptorDetail>
+    <CardAcptNm>PAYTEND EUROPE UAB</CardAcptNm>
+    <CardAcptStreetNm>Vilnius City sav</CardAcptStreetNm>
+    <CardAcptCityNm>Vilnius</CardAcptCityNm>
+    <CardAcptCtryCd>440</CardAcptCtryCd>
+    <CardAcptRgnCd>58</CardAcptRgnCd>
+    <CardAcptPostCd>01113</CardAcptPostCd>
+  </CardAcceptorDetail>
+  <AdditionalDataNational>
+    <CardNotPresentData>
+      <CustEmailAddr>king.gu@gmail.com</CustEmailAddr>
+      <CustHostServerNm>www.baidu.com</CustHostServerNm>
+      <CustBrowserTypDescTxt>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)</CustBrowserTypDescTxt>
+      <ShipToCtryCd>440</ShipToCtryCd>
+      <ShipMthdCd>01</ShipMthdCd>
+      <MerSKUNbr>TKDC315U</MerSKUNbr>
+      <CustIPAddr>127.142.5.56</CustIPAddr>
+      <CustIdPhoneNbr>13651654626</CustIdPhoneNbr>
+      <CallTypId>61</CallTypId>
+    </CardNotPresentData>
+  </AdditionalDataNational>
+  <TransCurrCd>978</TransCurrCd>
+  <SecureAuthenticationSafeKey>
+    <ScndIdCd>ASK</ScndIdCd>
+    <ElecComrceInd>05</ElecComrceInd>
+    <AmexExpVerificationValTxt>0000010567123487637946538663470000000000</AmexExpVerificationValTxt>
+    <AESKTransId>3132333435363738393031323334353637383930</AESKTransId>
+  </SecureAuthenticationSafeKey>
+  <AcptEnvData>
+    <Psd2Exemptions>
+      <EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd>
+      <AuthOutageInd>0</AuthOutageInd>
+    </Psd2Exemptions>
+    <InitPartyInd>1</InitPartyInd>
+  </AcptEnvData>
+  <MerSysTraceAudNbr>330460</MerSysTraceAudNbr>
+  <CardExprDt>2501</CardExprDt>
+</CardTransaction>
+
+<?xml version="1.0" encoding="UTF-8"?><CardTransaction><MsgTypId>1110</MsgTypId><CardNbr>374500261001009</CardNbr><TransProcCd>004000</TransProcCd><TransAmt>1600</TransAmt><MerSysTraceAudNbr>330460</MerSysTraceAudNbr><TransTs>230905131132</TransTs><TransId>000002532509704</TransId><RtrvRefNbr>230905131132</RtrvRefNbr><TransAprvCd>509704</TransAprvCd><MerTrmnlId>00000001</MerTrmnlId><CardAcceptorIdentification><MerId>8127921740</MerId></CardAcceptorIdentification><TransCurrCd>978</TransCurrCd><TransActCd>000</TransActCd><AcptEnvData><Psd2Exemptions><EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd><AuthOutageInd>0</AuthOutageInd></Psd2Exemptions><InitPartyInd>1</InitPartyInd></AcptEnvData><SecureAuthenticationSafeKey><ScndIdCd>ASK</ScndIdCd><AEVVRsltInd>2</AEVVRsltInd></SecureAuthenticationSafeKey><VerificationInformation><ServId>AX</ServId><ReqTypId>AE</ReqTypId></VerificationInformation></CardTransaction>
+AuthorizationRsp(super=com.paytend.models.trans.rsp.AuthorizationRsp@7d1cfb8b, transAprvCd=509704, transActCd=000)
+
+
+4 做结算   100005 000002532509704
+AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><MerCtgyCd>4111</MerCtgyCd><RefNumber>000001</RefNumber><TransAmt>1600</TransAmt><TransCurrCd>978</TransCurrCd><TransProcCd>000000</TransProcCd><TransAprvCd>199380</TransAprvCd><PointOfServiceData><OprEnvirCd>0</OprEnvirCd><CardCptrCpblCd>0</CardCptrCpblCd><CardDataInpCpblCd>1</CardDataInpCpblCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>3</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><CardNbr>374500261001009</CardNbr><TransDt>20230905</TransDt><TransId>000002532509704</TransId><SellId>1234QR7890</SellId><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><MerId>8127921740</MerId><BatchID>100005</BatchID></DataCaptureRequest>
+batchStatus1:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - DataCapture Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<DataCaptureResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100005</BatchID>
+  <RefNumber>000001</RefNumber>
+  <StatusCode>006</StatusCode>
+  <StatusText>105 Missing or Duplicate Reference Number</StatusText>
+</DataCaptureResponse>
+
+
+5 关闭批次  100005
+batchOpen:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100005</BatchID>
+  <BatchStatus>001</BatchStatus>
+  <BatchStatusText>Close</BatchStatusText>
+</BatchAdminResponse>
+
+
+6 开新批次 100006
+batchOpen:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100006</BatchID>
+  <BatchStatus>000</BatchStatus>
+  <BatchStatusText>Open</BatchStatusText>
+</BatchAdminResponse>
+
+7 做退货交易  31
+request:<CardTransaction>
+  <MsgTypId>1100</MsgTypId>
+  <CardNbr>374500261001009</CardNbr>
+  <TransProcCd>200000</TransProcCd>
+  <TransAmt>1600</TransAmt>
+  <TransTs>230905132535</TransTs>
+  <AcqInstCtryCd>276</AcqInstCtryCd>
+  <PointOfServiceData>
+    <CardDataInpCpblCd>1</CardDataInpCpblCd>
+    <CardCptrCpblCd>0</CardCptrCpblCd>
+    <OprEnvirCd>0</OprEnvirCd>
+    <CardPresentCd>0</CardPresentCd>
+    <CardDataInpModeCd>1</CardDataInpModeCd>
+    <CardDataOpCpblCd>0</CardDataOpCpblCd>
+    <TrmnlOpCpblCd>1</TrmnlOpCpblCd>
+    <CMAuthnCpblCd>6</CMAuthnCpblCd>
+    <CMPresentCd>1</CMPresentCd>
+    <CMAuthnMthdCd>0</CMAuthnMthdCd>
+    <CMAuthnEnttyCd>0</CMAuthnEnttyCd>
+    <PINCptrCpblCd>0</PINCptrCpblCd>
+  </PointOfServiceData>
+  <FuncCd>100</FuncCd>
+  <MsgRsnCd>1900</MsgRsnCd>
+  <MerCtgyCd>4111</MerCtgyCd>
+  <RtrvRefNbr>230905132535</RtrvRefNbr>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <CardAcceptorIdentification>
+    <MerId>8127921740</MerId>
+  </CardAcceptorIdentification>
+  <CardAcceptorDetail>
+    <CardAcptNm>PAYTEND EUROPE UAB</CardAcptNm>
+    <CardAcptStreetNm>Vilnius City sav</CardAcptStreetNm>
+    <CardAcptCityNm>Vilnius</CardAcptCityNm>
+    <CardAcptCtryCd>440</CardAcptCtryCd>
+    <CardAcptRgnCd>58</CardAcptRgnCd>
+    <CardAcptPostCd>01113</CardAcptPostCd>
+  </CardAcceptorDetail>
+  <AdditionalDataNational>
+    <CardNotPresentData>
+      <CustEmailAddr>king.gu@gmail.com</CustEmailAddr>
+      <CustHostServerNm>www.baidu.com</CustHostServerNm>
+      <CustBrowserTypDescTxt>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)</CustBrowserTypDescTxt>
+      <ShipToCtryCd>440</ShipToCtryCd>
+      <ShipMthdCd>01</ShipMthdCd>
+      <MerSKUNbr>TKDC315U</MerSKUNbr>
+      <CustIPAddr>127.142.5.56</CustIPAddr>
+      <CustIdPhoneNbr>13651654626</CustIdPhoneNbr>
+      <CallTypId>61</CallTypId>
+    </CardNotPresentData>
+  </AdditionalDataNational>
+  <TransCurrCd>978</TransCurrCd>
+  <NatlUseData>
+    <OriginalTransId>000002529199380</OriginalTransId>
+  </NatlUseData>
+  <SecureAuthenticationSafeKey>
+    <ScndIdCd>ASK</ScndIdCd>
+    <ElecComrceInd>05</ElecComrceInd>
+    <AmexExpVerificationValTxt>0000010567123487637946538663470000000000</AmexExpVerificationValTxt>
+    <AESKTransId>3132333435363738393031323334353637383930</AESKTransId>
+  </SecureAuthenticationSafeKey>
+  <AcptEnvData>
+    <Psd2Exemptions>
+      <EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd>
+      <AuthOutageInd>0</AuthOutageInd>
+    </Psd2Exemptions>
+    <InitPartyInd>1</InitPartyInd>
+  </AcptEnvData>
+  <MerSysTraceAudNbr>535748</MerSysTraceAudNbr>
+  <CardExprDt>2501</CardExprDt>
+</CardTransaction>
+
+<?xml version="1.0" encoding="UTF-8"?><CardTransaction><MsgTypId>1110</MsgTypId><CardNbr>374500261001009</CardNbr><TransProcCd>200000</TransProcCd><TransAmt>1600</TransAmt><MerSysTraceAudNbr>535748</MerSysTraceAudNbr><TransTs>230905132535</TransTs><TransId>000002532520751</TransId><RtrvRefNbr>230905132535</RtrvRefNbr><TransAprvCd>520751</TransAprvCd><MerTrmnlId>00000001</MerTrmnlId><CardAcceptorIdentification><MerId>8127921740</MerId></CardAcceptorIdentification><TransCurrCd>978</TransCurrCd><TransActCd>000</TransActCd><NatlUseData><OriginalTransId>000002529199380</OriginalTransId></NatlUseData><AcptEnvData><Psd2Exemptions><EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd><AuthOutageInd>0</AuthOutageInd></Psd2Exemptions><InitPartyInd>1</InitPartyInd></AcptEnvData><SecureAuthenticationSafeKey><ScndIdCd>ASK</ScndIdCd><AEVVRsltInd>2</AEVVRsltInd></SecureAuthenticationSafeKey><VerificationInformation><ServId>AX</ServId><ReqTypId>AE</ReqTypId></VerificationInformation></CardTransaction>
+AuthorizationRsp(super=com.paytend.models.trans.rsp.AuthorizationRsp@386f0da3, transAprvCd=520751, transActCd=000)
+
+8 做退货结算
+AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><RefNumber>000001</RefNumber><TransAmt>1600</TransAmt><TransCurrCd>978</TransCurrCd><TransProcCd>000000</TransProcCd><TransAprvCd>199380</TransAprvCd><PointOfServiceData><CardDataInpCpblCd>1</CardDataInpCpblCd><CardCptrCpblCd>0</CardCptrCpblCd><OprEnvirCd>0</OprEnvirCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>3</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><ElecComrceInd>05</ElecComrceInd><MerCtgyCd>4111</MerCtgyCd><CardNbr>374500261001009</CardNbr><TransDt>20230905</TransDt><TransId>000002532520751</TransId><SellId>1234QR7890</SellId><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><MerId>8127921740</MerId><BatchID>100006</BatchID></DataCaptureRequest>
+batchStatus1:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - DataCapture Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<DataCaptureResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100006</BatchID>
+  <RefNumber>000001</RefNumber>
+  <StatusCode>007</StatusCode>
+  <StatusText>Warning: 319 Invalid or Missing Transaction ID</StatusText>
+</DataCaptureResponse>
+
+9 关闭批次
+batchOpen:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100006</BatchID>
+  <BatchStatus>001</BatchStatus>
+  <BatchStatusText>Close</BatchStatusText>
+</BatchAdminResponse>
