@@ -30,6 +30,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.bouncycastle.util.io.Streams;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -38,11 +39,9 @@ import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -147,7 +146,7 @@ public class ApiClientTest {
 
         Field field = executor.getClass().getDeclaredField("httpClient");
         field.setAccessible(true);
-        field.set(executor,httpClient);
+        field.set(executor, httpClient);
         CloseableHttpResponse response = mock(CloseableHttpResponse.class);
         StatusLine statusLine = mock(StatusLine.class);
         when(statusLine.getStatusCode()).thenReturn(500);
@@ -181,7 +180,7 @@ public class ApiClientTest {
         CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
         Field field = executor.getClass().getDeclaredField("httpClient");
         field.setAccessible(true);
-        field.set(executor,httpClient);
+        field.set(executor, httpClient);
         when(httpClient.execute((HttpHost) anyObject(), (HttpRequest) anyObject())).thenReturn(null);
         AuthProvider authProvider = Mockito.mock(HmacAuthProvider.class);
         HttpHost httpHost = new HttpHost("apigateway.americanexpress.com", 443, "https");
@@ -203,7 +202,7 @@ public class ApiClientTest {
         CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
         Field field = executor.getClass().getDeclaredField("httpClient");
         field.setAccessible(true);
-        field.set(executor,httpClient);
+        field.set(executor, httpClient);
         CloseableHttpResponse response = mock(CloseableHttpResponse.class);
         StatusLine statusLine = mock(StatusLine.class);
         when(statusLine.getStatusCode()).thenReturn(200);

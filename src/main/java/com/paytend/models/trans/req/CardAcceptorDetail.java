@@ -2,6 +2,7 @@ package com.paytend.models.trans.req;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Tolerate;
 
 /**
@@ -11,6 +12,7 @@ import lombok.experimental.Tolerate;
 
 @Getter
 @Builder
+@Setter
 public class CardAcceptorDetail {
     @Tolerate
     public CardAcceptorDetail() {

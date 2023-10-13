@@ -1,16 +1,26 @@
 package com.paytend.models.trans.req;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Tolerate;
+
 /**
  *
  * 62
  * @author gudongyang
  */
+@Getter
+@Setter
+@Builder
 public class ValidationInformation62 {
 
-    AMEXTransponderTransaction AMEXTransponderTransaction;
-    VISAPS2000Transaction VISAPS2000Transaction;
+    private AMEXTransponderTransaction AMEXTransponderTransaction;
+    private VISAPS2000Transaction VISAPS2000Transaction;
 
-    public class VISAPS2000Transaction {
+    @Tolerate
+    public ValidationInformation62(){}
+    public static class VISAPS2000Transaction {
         String VISAPS2000QlfyTransInd;
         String AddVISASubElemValTxt;
     }

@@ -1,7 +1,11 @@
 package io.aexp.api.client.core.security.authentication;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.HexUtil;
+import com.google.common.io.BaseEncoding;
 import com.paytend.models.trans.req.*;
+import com.paytend.models.trans.req.AcptEnvData.Psd2Exemptions;
 import io.aexp.api.client.core.configuration.ConfigurationKeys;
 import io.aexp.api.client.core.configuration.ConfigurationProvider;
 import io.aexp.api.client.core.configuration.PropertiesConfigurationProvider;
@@ -13,8 +17,7 @@ import org.junit.Test;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.X509TrustManager;
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -23,9 +26,10 @@ import java.util.concurrent.TimeUnit;
 
 import static io.aexp.api.client.core.security.authentication.QATest.createSSLContext;
 import static io.aexp.api.client.core.security.authentication.QATest.loadKeyStore;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class AuthorizationTest {
+public class AuthorizationNCPTest {
     private ConfigurationProvider configurationProvider;
     private static final String propertiesFileName = "auth.test.properties";
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/xml; charset=utf-8");
@@ -126,31 +130,32 @@ public class AuthorizationTest {
     public void testBasicCNP4012() throws Exception {
         long pan = 373953192351004L;
         long amt = 7600;
-        sendNCP(pan, amt, pointOfServiceDataBuilder);
+        sendNCP(pan, amt, pointOfServiceDataBuilder, null);
 //        sendXML(xml);
     }
 
 
     @Test
-    public void testNCP4013() throws IOException {
+    public void testNCP4013() throws Exception {
         long pan = 373953192351004L;
         long amt = 8300;
-        sendNCP(pan, amt, pointOfServiceDataBuilder);
+        sendNCP(pan, amt, pointOfServiceDataBuilder, null);
     }
 
     @Test
-    public void testNCP4014() throws IOException {
-        long pan = 341111599241001L;
+    public void testNCP4014() throws Exception {
+        long pan = 341111599241001L;  //341111599241000L module 10 check passed
         long amt = 2000;
-        sendNCP(pan, amt, pointOfServiceDataBuilder);
+        sendNCP(pan, amt, pointOfServiceDataBuilder, null);
     }
 
-    private String sendXml(String url, String xml, Map<String, String> headers) throws IOException {
+
+    private String sendXml(String url, String xml, Map<String, String> headers) throws Exception {
         HttpUrl httpUrl = HttpUrl.parse(url);
         HttpUrl.Builder httpUrlBuilder = httpUrl.newBuilder();
         Request.Builder builder = new Request.Builder()
                 .url(httpUrlBuilder.build())
-                .post(RequestBody.create(TEXT_MEDIA_TYPE, xml));
+                .post(RequestBody.create(TEXT_MEDIA_TYPE, "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml)));
         for (Map.Entry<String, String> header : headers.entrySet()) {
             System.out.println(header.getKey() + " = " + header.getValue());
             builder.addHeader(header.getKey(), header.getValue());
@@ -158,49 +163,15 @@ public class AuthorizationTest {
         Request request = builder.build();
         Response response = httpClient.newCall(request).execute();
         String tmp = response.body().string();
-        System.out.println("Response: " + tmp);
-        System.out.println(response.code());
         assertTrue(response.isSuccessful());
-        return "";
-    }
-
-    public String sendXML(String xml) throws Exception {
-        URL url = new URL("https://qwww318.americanexpress.com/IPPayments/inter/CardAuthorization.do");
-        URLConnection conn = url.openConnection();
-        conn.setRequestProperty("ContentType", "plain/text");
-        conn.setRequestProperty("UserAgent", "Application");
-        conn.setRequestProperty("Host", "qwww318.americanexpress.com:443");
-        conn.setRequestProperty("ContentLength", String.valueOf(xml.length()));
-        conn.setRequestProperty("CacheControl", "no-cache");
-        conn.setRequestProperty("Connection", "Keep-Alive");
-        conn.setRequestProperty("Origin", "Paytend");
-        conn.setRequestProperty("country", "276");
-        conn.setRequestProperty("region", "EMEA");
-        conn.setRequestProperty("message", "XML GCAG");
-        conn.setRequestProperty("MerchNbr", "3285220521");
-        conn.setRequestProperty("RtInd", "050");
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setUseCaches(false);
-        conn.getRequestProperties().entrySet().stream().forEach(entry -> {
-            System.out.println(entry.getKey() + " = " + entry.getValue());
-        });
-
-        conn.setConnectTimeout(10 * 1000);
-        conn.setReadTimeout(120 * 1000);
-        DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-        out.writeBytes(xml);
-
-        out.flush();
-        System.out.println("send xml successfully!");
-        byte[] tmp = new byte[1024];
-        InputStream inputStream = conn.getInputStream();
-        int ret = inputStream.read(tmp);
-        System.out.println("ret1=" + ret);
-        if (ret != -1) {
-            System.out.println("ret2=" + new String(tmp, 0, ret));
+        System.out.println("" + response.code());
+        try {
+            System.out.println("resp:" + XmlUtility.getInstance().xmlBeautifulFormat(tmp));
+        } catch (Exception e) {
+            System.out.println(tmp);
+            e.printStackTrace();
         }
-        return "";
+        return tmp;
     }
 
 
@@ -248,10 +219,13 @@ public class AuthorizationTest {
     public void testDate() {
         System.out.println(DateUtil.format(new Date(), "yyyymmddHHmmss"));
         System.out.println(DateUtil.format(new Date(), "yyyymmddHHmmss").substring(2));
-
     }
 
-    private void sendNCP(long pan, long amt, PointOfServiceData.PointOfServiceDataBuilder pointOfServiceDataBuilder) throws IOException {
+    private void sendNCP(long pan,
+                         long amt,
+                         PointOfServiceData.PointOfServiceDataBuilder pointOfServiceDataBuilder,
+                         SecureAuthenticationSafeKey.SecureAuthenticationSafeKeyBuilder SecureAuthenticationSafeKeyBuilder) throws Exception {
+
         Authorization.AuthorizationBuilder authorizationBuilder = Authorization.builder();
         authorizationBuilder.MsgTypId("1100");
         authorizationBuilder.CardNbr(String.valueOf(pan));
@@ -264,18 +238,15 @@ public class AuthorizationTest {
         authorizationBuilder.AcqInstCtryCd("276");
         authorizationBuilder.PointOfServiceData(pointOfServiceDataBuilder.build());
         authorizationBuilder.FuncCd("100");
-        authorizationBuilder.MsgRsnCd("1900"); //todo
+        authorizationBuilder.MsgRsnCd("1900");
         authorizationBuilder.MerCtgyCd("4111"); //mcc
-        authorizationBuilder.RtrvRefNbr("AB1234567890"); //refo
-
-        authorizationBuilder.MerTrmnlId("00000001"); //mcc
-
+        authorizationBuilder.RtrvRefNbr(DateUtil.format(new Date(), "yyyyMMddHHmmss").substring(2)); //refo
+        authorizationBuilder.MerTrmnlId("00000001"); //
         CardAcceptorIdentification cardAcceptorIdentification = CardAcceptorIdentification.builder()
                 .MerId("8127921740")
                 .build();
+
         authorizationBuilder.CardAcceptorIdentification(cardAcceptorIdentification);
-
-
         CardAcceptorDetail cardAcceptorDetail = CardAcceptorDetail.builder()
                 .CardAcptNm("PAYTEND EUROPE UAB")
                 .CardAcptStreetNm("Vilnius City sav")
@@ -298,37 +269,26 @@ public class AuthorizationTest {
                 .CallTypId("61")
                 .build();
 
-//        InternetAirlineCustome.InternetAirlineCustomeBuilder InternetAirlineCustomeBuilder = InternetAirlineCustome.builder())
-//        InternetAirlineCustomeBuilder
-//                .FareBasisCd1("ABC123")
-//        ;
         AdditionalDataNational additionalDataNational = AdditionalDataNational.builder()
                 .CardNotPresentData(cardNotPresentData)
-//                .InternetAirlineCustome(InternetAirlineCustomeBuilder.build())
-//                .CustEmailAddr(InternetAirlineCustomeBuilder.build())
                 .build();
-
         authorizationBuilder.AdditionalDataNational(additionalDataNational);
-
-//        AdditionalDataPrivate.AMEXExtendedPaymentIndicator AMEXExtendedPaymentIndicator =
-//                new AdditionalDataPrivate.AMEXExtendedPaymentIndicator();
-//        AdditionalDataPrivate additionalDataPrivate = new AdditionalDataPrivate(AMEXExtendedPaymentIndicator);
-//        authorizationBuilder.TransCurrCd("840");
         authorizationBuilder.TransCurrCd("978");//Euro
-
         AcptEnvData acptEnvData = AcptEnvData.builder()
                 .InitPartyInd("1")
-                .Psd2Exemptions(AcptEnvData.Psd2Exemptions.builder().EuPsd2SecCorpPayInd("0").AuthOutageInd("0")
+                .psd2Exemptions(Psd2Exemptions.builder()
+                        .EuPsd2SecCorpPayInd("0")
+                        .AuthOutageInd("0")
                         .build())
                 .build();
         authorizationBuilder.AcptEnvData(acptEnvData);
 
-        String url = baseUrl;
-        String method = "POST";
-        System.out.println(url);
-        String xml = XmlUtility.getInstance().getString(authorizationBuilder.build());
-        System.out.println(xml);
+        if (SecureAuthenticationSafeKeyBuilder != null) {
+            authorizationBuilder.SecureAuthenticationSafeKey(SecureAuthenticationSafeKeyBuilder.build());
+        }
 
+        String xml = XmlUtility.getInstance().getString(authorizationBuilder.build());
+        System.out.println("request:" + xml);
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "plain/text");
         headers.put("User-Agent", "Application;");
@@ -344,4 +304,54 @@ public class AuthorizationTest {
         sendXml(baseUrl, xml, headers);
     }
 
+
+    @Test
+    public void testModule10() throws Exception {
+        assertTrue(checkModule10(374245005741003L));
+        assertFalse(checkModule10(374245005741004L));
+        System.out.println(checkModule10(341111599241000L));
+    }
+
+    /**
+     * modeule 10 check
+     *
+     * @param pan
+     * @return
+     * @throws Exception
+     */
+    private boolean checkModule10(long pan) throws Exception {
+        //get last num
+        int checkVal = (int) (pan % 10);
+        String tmp = String.valueOf(pan);
+        char[] panCs = tmp.substring(0, tmp.length() - 1).toCharArray();
+        char[] cs = new char[panCs.length];
+        System.arraycopy(panCs, 0, cs, 0, cs.length);
+        for (int pos = panCs.length - 1; pos >= 0; pos -= 2) {
+            int n = (panCs[pos] - 0x30) * 2;
+            if (n >= 10) {
+                n = n / 10 + n % 10;
+            }
+            cs[pos] = (char) (n + 0x30);
+        }
+        int sum = 0;
+        for (char c : cs) {
+            sum += c - 0x30;
+        }
+        int calcCheckValue = sum % 10;
+        if (calcCheckValue != 0) {
+            calcCheckValue = 10 - calcCheckValue;
+        }
+        return checkVal == calcCheckValue;
+    }
+
+    @Test
+    public void checkBase64() {
+//        0000010567123487637946538663470000000000
+        System.out.println(HexUtil.encodeHexStr(Base64.decode("AAABBWcSNIdjeUZThmNHAAAAAAA=")));
+         System.out.println(Base64.encode(HexUtil.decodeHex("0000010567123487637946538663470000000000")));
+        System.out.println(HexUtil.encodeHexStr(BaseEncoding.base64().decode("AAABAURAWAAAAAAAAEBYAAAAAAA=")));
+         System.out.println(HexUtil.encodeHexStr(BaseEncoding.base64().decode("CACYB0gSNIJ4V2hIBglWAAAAAAA=")));
+        System.out.println(HexUtil.encodeHexStr(BaseEncoding.base64().decode("BwABB0gSNIJ4V2hIBglWAAAAAAA=")));
+
+    }
 }

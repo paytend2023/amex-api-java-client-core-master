@@ -2,6 +2,8 @@ package com.paytend.models.trans.req;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Tolerate;
 
 /**
@@ -9,12 +11,15 @@ import lombok.experimental.Tolerate;
  */
 @Getter
 @Builder
+@Setter
+@ToString
 public class AcptEnvData {
-
-
+    /**
+     * 0 = Customer-Initiated
+     * 1 = Merchant-Initiated
+     */
     String InitPartyInd;
-
-    Psd2Exemptions Psd2Exemptions;
+    Psd2Exemptions psd2Exemptions;
 
     @Tolerate
     public AcptEnvData() {

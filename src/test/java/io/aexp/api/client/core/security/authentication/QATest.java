@@ -68,7 +68,8 @@ public class QATest {
         return keyStore;
     }
 
-    public static SSLContext createSSLContext(KeyStore keyStore, String keyPassword) throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException, KeyManagementException {
+    public static SSLContext createSSLContext(KeyStore keyStore, String keyPassword)
+            throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException, KeyManagementException {
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         keyManagerFactory.init(keyStore, keyPassword.toCharArray());
         SSLContext sslContext = SSLContext.getInstance("TLS");

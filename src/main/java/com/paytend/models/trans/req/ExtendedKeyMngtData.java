@@ -1,8 +1,13 @@
 package com.paytend.models.trans.req;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author gudongyang
  */
+@Getter
+@Setter
 public class ExtendedKeyMngtData {
     String ExtDynSesKeyPINData;
     String ExtPINDataTxt1;

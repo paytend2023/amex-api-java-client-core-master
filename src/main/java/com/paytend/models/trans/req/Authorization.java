@@ -1,10 +1,14 @@
 package com.paytend.models.trans.req;
 
+
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import io.aexp.api.client.core.utils.XmlUtility;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Tolerate;
 
 /**
@@ -12,9 +16,11 @@ import lombok.experimental.Tolerate;
  */
 @Builder
 @Getter
+@Setter
 @JacksonXmlRootElement(localName = "CardTransaction")
 @JsonPropertyOrder(
-        {"MsgTypId",
+        {
+                "MsgTypId",
                 "CardNbr",
                 "TransProcCd",
                 "TransAmt",
@@ -43,7 +49,7 @@ import lombok.experimental.Tolerate;
                 "ICCSDataTxt",
                 "NatlUseData",
                 "SecureAuthenticationSafeKey",
-                "ValidationInformation62",
+                "ValidationInformation",
                 "ValidationInformation63",
                 "KeyMgmtData",
                 "ExtendedKeyMngtData",
@@ -53,192 +59,200 @@ import lombok.experimental.Tolerate;
 
 public class Authorization {
 
-    String MsgTypId;
+    protected String MsgTypId;
 
     /**
      * bit 2
      */
-    String CardNbr;
+    protected String CardNbr;
 
     /**
      * bit 3
      */
-    String TransProcCd;
+    protected String TransProcCd;
     /**
      * bit 4
      */
-    String TransAmt;
+    protected String TransAmt;
     /**
      * bit 7
      */
 
-    String XmitTs;
+    protected String XmitTs;
 
     /**
      * bit 11
      */
-    String MerSysTraceAudNbr;
+    protected String MerSysTraceAudNbr;
 
     /**
      * YYMMDDhhmmss
      * bit 12
      */
-    String TransTs;
+    protected String TransTs;
 
     /**
      * YYMM.
      * bit 13
      */
-    String CardEffDt;
+    protected String CardEffDt;
 
     /**
      * YYMM
      * bit 14
      */
-    String CardExprDt;
+    protected String CardExprDt;
 
     /**
      * bit 19
      */
-    String AcqInstCtryCd;
+    protected String AcqInstCtryCd;
 
     /**
      * bit 22
      */
-    PointOfServiceData PointOfServiceData;
+    protected PointOfServiceData PointOfServiceData;
 
     /**
      * bit 24
      */
-    String FuncCd;
+    protected String FuncCd;
 
     /**
      * bit 25
      */
-    String MsgRsnCd;
+    protected String MsgRsnCd;
 
     /**
      * bit 26
      */
-    String MerCtgyCd;
+    protected String MerCtgyCd;
 
     /**
      * bit 27
      */
-    String AprvCdLgth;
+    protected String AprvCdLgth;
 
     /**
      * bit 31
      */
-    String TransId;
+    protected String TransId;
 
     /**
      * bit 32
      */
-    String AcqInstIdCd;
+    protected String AcqInstIdCd;
 
     /**
      * bit 33
      */
-    String FwdInstIdCd;
+    protected String FwdInstIdCd;
 
     /**
      * bit 35
      */
-    String CardTrack2Data;
+    protected String CardTrack2Data;
 
     /**
      * bit 37
      */
-    String RtrvRefNbr;
+    protected String RtrvRefNbr;
 
     /**
      * bit 41
      */
-    String MerTrmnlId;
+    protected String MerTrmnlId;
 
     /**
      * bit 42
      */
-    CardAcceptorIdentification CardAcceptorIdentification;
+    protected CardAcceptorIdentification CardAcceptorIdentification;
 
     /**
      * bit 43
      */
-    CardAcceptorDetail CardAcceptorDetail;
+    protected CardAcceptorDetail CardAcceptorDetail;
 
     /**
      * bit 45
      */
-    String CardTrack1Data;
+    protected String CardTrack1Data;
 
     /**
      * bit 47
      */
-    AdditionalDataNational AdditionalDataNational;
+    protected AdditionalDataNational AdditionalDataNational;
 
     /**
      * bit 48
      */
-    AdditionalDataPrivate AdditionalDataPrivate;
+    protected AdditionalDataPrivate AdditionalDataPrivate;
 
     /**
      * bit 49
      */
-    String TransCurrCd;
+    protected String TransCurrCd;
 
     /**
      * bit 52
      */
-    String PINDataTxt;
+    protected String PINDataTxt;
 
     /**
      * bit 55
      */
-    String ICCSDataTxt;
+    protected String ICCSDataTxt;
 
     /**
      * bit 60
      */
-    NatlUseData NatlUseData;
+    protected NatlUseData NatlUseData;
 
     /**
      * bit 61
      */
-    SecureAuthenticationSafeKey SecureAuthenticationSafeKey;
+    protected SecureAuthenticationSafeKey SecureAuthenticationSafeKey;
 
     /**
      * bit 62
      */
-    ValidationInformation62 ValidationInformation;
+    @Setter(AccessLevel.NONE)
+    private ValidationInformation62 ValidationInformation;
 
     /**
      * bit 63
      * todo
      */
     @JacksonXmlProperty(localName = "ValidationInformation")
-    VerificationInformation63 ValidationInformation63;
+    @Setter(AccessLevel.NONE)
+    private VerificationInformation63 ValidationInformation63;
 
     /**
      * bit 96
      */
-    KeyMgmtData KeyMgmtData;
+    protected KeyMgmtData KeyMgmtData;
 
     /**
      * bit 111
      */
-    ExtendedKeyMngtData ExtendedKeyMngtData;
+    protected ExtendedKeyMngtData ExtendedKeyMngtData;
 
     /**
      * bit 112
      */
-    PaymentAcctData PaymentAcctData;
+    protected PaymentAcctData PaymentAcctData;
     /**
      * bit 113
      */
-    AcptEnvData AcptEnvData;
+    protected AcptEnvData AcptEnvData;
 
     @Tolerate
     public Authorization() {
     }
+
+    public String toXMLString() {
+        return XmlUtility.getInstance().getString(this);
+    }
+
+
 }

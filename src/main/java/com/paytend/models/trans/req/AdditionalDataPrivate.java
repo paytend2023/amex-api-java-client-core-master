@@ -2,6 +2,7 @@ package com.paytend.models.trans.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author gudongyang
@@ -9,6 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Setter
 public class AdditionalDataPrivate {
 
     AMEXExtendedPaymentIndicator AMEXExtendedPaymentIndicator;
