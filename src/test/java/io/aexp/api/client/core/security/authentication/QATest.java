@@ -752,6 +752,7 @@ public class QATest {
         System.out.println("Response: " + tmp);
         System.out.println(response.code());
         assertTrue(response.isSuccessful());
+
         return tmp;
     }
 }
