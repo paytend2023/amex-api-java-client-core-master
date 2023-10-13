@@ -80,14 +80,15 @@ public class TestNCP9000 {
 
 
     /**
+     * 9050 - CNP - Remote Transaction
      * Test case description
-     * 9050 - CNP - Remote Transaction :
      * Customer Initiated Transaction	Test a Card Not Present 1100 Authorization Request supporting a CIT transaction.
      * An Approved response is sent in the 1110 Authorization Response.
      * <p>
      * instructions
      * "<p>Initiate a CIT (Customer Initiiated Transaction)<br/>
-     * Use PAN: 374500262001008<br/>Transaction amount: $1100 - $1500 ($11.00 - $15.00)<br/>Return Action Code: 000<br/></p>
+     * Use PAN: 374500262001008<br/>
+     * Transaction amount: $1100 - $1500 ($11.00 - $15.00)<br/>Return Action Code: 000<br/></p>
      * American Express application was selected.
      * <p>
      * user  validation
@@ -122,7 +123,6 @@ public class TestNCP9000 {
                         .build();
 
         authorizationBuilder.TransCurrCd("156");
-        authorizationBuilder.TransCurrCd("840");
 
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
@@ -139,12 +139,15 @@ public class TestNCP9000 {
     }
 
     /**
-     * test case description
-     * 9051 - CNP - Remote Transaction : Customer Initiated Transaction with Safekey.
+     * * TEST CASE NAME
+     * 9051 - CNP - Remote Transaction
+     * <p>
+     * TEST CASE DESCRIPTION
+     * Customer Initiated Transaction with Safekey.
      * Test a Card Not Present 1100 Authorization Request supporting a CIT transaction including Safekey data.
      * Pre-requisite for this test case is the customer has already certified or is certifying Safekey.
      * <p>
-     * instruction
+     * INSTRUCTION
      * <p></p><p></p><p>Initiate a CIT (Customer Initiated Transaction)</p>
      * <p>Convert Safekey - Base 64 data listed in Host Validation.</p><p>
      * Use PAN: 374500262001008
@@ -205,22 +208,22 @@ public class TestNCP9000 {
     }
 
     /**
-     * test case description
-     * 9053 - CNP - Remote Transaction :
+     * TEST CASE DESCRIPTION
+     * 9053 - CNP - Remote Transaction
      * Mail Order Transaction	Test a Card Not Present Customer Initiated Mail Order 1100 Authorization Request.
      * An Approved response is sent in the 1110 Authorization Response.
      * instruction
      * "<p>Initiate a CIT (Customer Initiated Transaction)<br/>Transaction amount: $100 - $1000 (1.00 - 10.00)<br/>
      * Use Pan: 375705004001005<br/>Returned Action Code: 000<br/></p>
      * <p>
-     * user validation
+     * USER VALIDATION
      * American Express application was selected.
      * System displayed ""Enter Card"" or similar.
      * Card Expiry date was requested.
      * Transaction amount was requested.
      * Transaction was Approved
      * <p>
-     * host validation
+     * HOST VALIDATION
      * The transaction reflects a Customer Initiated Transaction
      * POS Data Code represents a Card Not Present - Mail Order transaction.
      * InitPartyInd reflects a Customer Initiated Transaction.
@@ -266,8 +269,9 @@ public class TestNCP9000 {
     }
 
     /**
-     * test case description
-     * 9054-1 - CNP - Remote Transaction : Merchant Initiated Recurring Billing Transaction
+     * TEST CASE DESCRIPTION
+     * 9054- CNP - Remote Transaction
+     * Merchant Initiated Recurring Billing Transaction
      * Test a Card Not Present 1100 Authorization Request CIT transaction with Recurring Billing MIT Request.
      * An Approved response is sent in the 1110 Authorization Response.
      * "Initiate a CIT (Customer Initiated Transaction) for Recurring Billing
@@ -293,8 +297,9 @@ public class TestNCP9000 {
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
 
+    //000002493782263
     @Test
-    public void test9054_1() throws Exception {
+    public void test9054CIT() throws Exception {
         long pan = 374500261001009L;
         long amt = 100;
         AuthorizationFactory.AuthorizationConfig config =
@@ -330,11 +335,13 @@ public class TestNCP9000 {
     }
 
     /**
-     * test case description
-     * 9054-2 - CNP - Remote Transaction : Merchant Initiated Recurring Billing Transaction	Test a Card Not Present 1100 Authorization
-     * Request CIT transaction with Recurring Billing MIT Request.
-     * An Approved response is sent in the 1110 Authorization Response.
-     * "Initiate a MIT (Merchant Initiated Transaction) for Recurring Billing
+     * 9054 - CNP - Remote Transaction
+     * Merchant Initiated Recurring Billing Transaction  Test a Card Not Present 1100 Authorization Request CIT transaction with Recurring Billing MIT Request.  An Approved response is sent in the 1110 Authorization Response.
+     * <p>
+     * MIT
+     * N
+     * <p>
+     * Initiate a MIT (Merchant Initiated Transaction) for Recurring Billing
      * Use PAN: 374500261001009
      * Transaction amount: $100 - $1000 ($1.00 - 10.00)
      * Returned Action Code: 000
@@ -358,7 +365,7 @@ public class TestNCP9000 {
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
     @Test
-    public void test9054_2() throws Exception {
+    public void test9054MIT() throws Exception {
         long pan = 374500261001009L;
         long amt = 100;
         AuthorizationFactory.AuthorizationConfig config =
@@ -393,9 +400,15 @@ public class TestNCP9000 {
     }
 
     /**
-     * 9056-1 - CNP - Remote Transaction: CIT with subsequent MIT (Non-US Customers Only)
+     * 9056  - CNP - Remote Transaction CIT with subsequent MIT (Non-US Customers Only)
+     * <p>
      * Test a Card Not Present 1100 Authorization Request supporting a CIT transaction with subsequent MIT.
-     * An Approved response is sent in the 1110 Authorization Response. 	"Initiate a CIT (Customer Initiated Transaction)
+     * An Approved response is sent in the 1110 Authorization Response.
+     * <p>
+     * CIT
+     * N
+     * <p>
+     * Initiate a CIT (Customer Initiated Transaction)
      * Use PAN: 374500262001008
      * Transaction amount:  $600 - $1000 ($6.00 - 10.00)
      * Returned Action Code: 000
@@ -407,6 +420,7 @@ public class TestNCP9000 {
      * Transaction amount was requested.
      * Transaction was approved.
      * <p>
+     * <p>
      * The transaction reflects a Customer Initiated Transaction
      * POS Data Code represents a Card Not Present transaction.
      * InitPartyInd reflects a Customer Initiated Transaction.
@@ -417,7 +431,7 @@ public class TestNCP9000 {
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
     @Test
-    public void test9056_1() throws Exception {
+    public void test9056CIT() throws Exception {
         long pan = 374500261001009L;
         long amt = 600;
         AuthorizationFactory.AuthorizationConfig config =
@@ -452,9 +466,15 @@ public class TestNCP9000 {
     }
 
     /**
-     * 9056-2 - CNP - Remote Transaction: CIT with subsequent MIT (Non-US Customers Only)
+     * 9056 - CNP - Remote Transaction CIT with subsequent MIT (Non-US Customers Only)
+
      * Test a Card Not Present 1100 Authorization Request supporting a CIT transaction with subsequent MIT.
-     * An Approved response is sent in the 1110 Authorization Response.	MIT	N	"Initiate a MIT (Merchant Initiated Transaction)
+     * An Approved response is sent in the 1110 Authorization Response.
+     *
+     * MIT
+     * N
+     *
+     * Initiate a MIT (Merchant Initiated Transaction)
      * Use PAN: 374500262001008
      * Transaction amount:  $600 - $1000 ($6.00 - 10.00)
      * Returned Action Code: 000
@@ -480,7 +500,7 @@ public class TestNCP9000 {
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
     @Test
-    public void test9056_2() throws Exception {
+    public void test9056MIT() throws Exception {
         long pan = 374500262001008L;
         long amt = 600;
         AuthorizationFactory.AuthorizationConfig config =
@@ -515,12 +535,17 @@ public class TestNCP9000 {
     }
 
     /**
-     * 9057 - CNP - Remote Transaction : Telephone Order Transaction	Test a Card Not Present 1100 CIT Telephone Order Authorization Request .
-     * An Approved response is sent in the 1110 Authorization Response.	 	"Initiate a CIT (Customer Initiated Transaction)
+     * 9057 - CNP - Remote Transaction :
+     * Telephone Order Transaction	Test a Card Not Present 1100 CIT Telephone Order Authorization Request .
+     * An Approved response is sent in the 1110 Authorization Response.
+     * <p>
+     * CIT
+     * N
+     * <p>
+     * "Initiate a CIT (Customer Initiated Transaction)
      * Transaction amount: $1100 - $2000 ($11.00 - 20.00)
      * Use PAN: 375705004001005
      * Returned Action Code: 000
-     * <p>
      * American Express application was selected.
      * System displayed ""Enter Card"" or similar.
      * Card Expiry date was requested.
@@ -538,8 +563,8 @@ public class TestNCP9000 {
      */
     @Test
     public void test9057() throws Exception {
-        long pan =375705004001005L;
-        long amt = 1100 ;
+        long pan = 375705004001005L;
+        long amt = 1100;
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
@@ -561,6 +586,7 @@ public class TestNCP9000 {
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
                 .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
+
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
@@ -601,8 +627,8 @@ public class TestNCP9000 {
      */
     @Test
     public void test9059() throws Exception {
-        long pan =374500262001008L;
-        long amt = 7000 ;
+        long pan = 374500262001008L;
+        long amt = 7000;
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
@@ -614,13 +640,14 @@ public class TestNCP9000 {
                         .acptEnvDataBuilder(acptEnvDataBuilder)
                         .build();
 
+
+        acptEnvDataBuilder.psd2Exemptions(AcptEnvData.Psd2Exemptions.builder()
+                .EuPsd2SecCorpPayInd("0")
+                .AuthOutageInd("1").build());
+        pointOfServiceDataBuilder.CMPresentCd("1");
         secureAuthenticationSafeKeyBuilder.ScndIdCd("ASK")
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
-
-
-//        acptEnvDataBuilder.psd2Exemptions(  AcptEnvData.Psd2Exemptions.Psd2ExemptionsBuilder().build());
-
 
 
         String tmp = "000000" + new Random().nextLong();
