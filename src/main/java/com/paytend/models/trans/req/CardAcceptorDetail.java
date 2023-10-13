@@ -18,10 +18,43 @@ public class CardAcceptorDetail {
     public CardAcceptorDetail() {
     }
 
+    /**
+     * 38 bytes
+     * Alphanumeric
+     * Yes
+     */
     String CardAcptNm;
+    /**
+     * 38 bytes
+     * Alphanumeric
+     * Yes
+     */
     String CardAcptStreetNm;
+    /**
+     * 21 bytes
+     * Alphanumeric
+     * Yes
+     */
     String CardAcptCityNm;
-    String CardAcptPostCd;
-    String CardAcptRgnCd;
+    /**
+     * 3 bytes
+     * Alphanumeric
+     * Yes
+     */
     String CardAcptCtryCd;
+
+
+    /**
+     * 3 bytes
+     * Alphanumeric
+     * Yes
+     */
+    String CardAcptRgnCd;
+
+    /**
+     * 15 bytes
+     * Alphanumeric
+     * No
+     */
+    String CardAcptPostCd;
 }

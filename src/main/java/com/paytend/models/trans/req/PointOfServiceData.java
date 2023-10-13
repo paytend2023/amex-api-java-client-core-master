@@ -39,7 +39,7 @@ public class PointOfServiceData {
 
 
     /**
-     * 0  No electronic authentication or unknown
+     * 0 No electronic authentication or unknown
      * 1 PIN
      * 2 Electronic signature analysis
      * 3 Biometrics
