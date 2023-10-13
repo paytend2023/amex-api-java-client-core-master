@@ -39,6 +39,10 @@ import java.util.Random;
  */
 
 public class SafeKeyTest {
+
+    //    headers.put("Host", baseUrl);
+    private static String url = "https://qwww318.americanexpress.com/IPPayments/inter/CardAuthorization.do";
+
     Authorization.AuthorizationBuilder
             authorizationBuilder = Authorization.builder()
             .MsgTypId("1100")
@@ -167,7 +171,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -275,7 +279,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -387,7 +391,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
 
@@ -497,7 +501,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -600,14 +604,14 @@ public class SafeKeyTest {
                 .AESKTransId("3132333435363738393031323334353637383930")
         ;
 
-         String tmp = "000000" + new Random().nextLong();
+        String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
                 .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -707,7 +711,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -793,7 +797,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -901,7 +905,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -919,10 +923,10 @@ public class SafeKeyTest {
      * Use PAN:374500262001008 </p><p><span style=""font-size: 12px;float: none;"">
      * SafeKey 2.0 Use PAN: </span> 375987000169578<br/>Transaction Amount: 8100 - 9000 (e.g. $81.00 - $90.00)<br/>ECI: 06<br/>
      * AEVV Result: U<br/>Return Action Code: 000<br/></p><p>
-     *     STATIC: Use the AEVV Value indicated in the Host Validation section. <br/><br/>
+     * STATIC: Use the AEVV Value indicated in the Host Validation section. <br/><br/>
      * DYNAMIC: The AEVV Value comes from the STL<br/>
      * Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/></p><!--StartFragment--><p style=""font-size: 12px;""><i><u>
-     *     This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
+     * This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
      * </u></i></p><p style=""font-size: 12px;""><i><u>If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.</u></i></p>
      * ECI: 06
      * SafeKey AEVV Value :  BwABB0gSNIJ4V2hIBglWAAAAAAA=
@@ -1005,7 +1009,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -1027,13 +1031,13 @@ public class SafeKeyTest {
      * Transaction Amount: 9100 - 9500 (e.g. $91.00 - $95.00)<br/>
      * ECI: 06<br/>AEVV Result: 2
      * <br/>Return Action Code: 000<br/></p><p>
-     *     STATIC: Use the AEVV Value indicated in the Host Validation section.
-     *     <br/><br/>DYNAMIC: The AEVV Value comes from the STL<br/>
-     *     Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/>
+     * STATIC: Use the AEVV Value indicated in the Host Validation section.
+     * <br/><br/>DYNAMIC: The AEVV Value comes from the STL<br/>
+     * Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/>
      * </p><p style=""font-size: 12px;""><i><u>
-     *     This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
+     * This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
      * </u></i></p><p style=""font-size: 12px;""><i><u>
-     *     If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.
+     * If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.
      * </u></i></p>
      * <p>
      * host validation
@@ -1116,7 +1120,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
@@ -1217,7 +1221,7 @@ public class SafeKeyTest {
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
-        String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
+        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");

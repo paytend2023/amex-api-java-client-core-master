@@ -1,6 +1,8 @@
 package com.paytend.models.trans.req;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.paytend.models.trans.XmlRequest;
+import io.aexp.api.client.core.utils.XmlUtility;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,19 +17,22 @@ import lombok.experimental.Tolerate;
 @Setter
 @Builder
 @JacksonXmlRootElement(localName = "BatchAdminRequest")
-public class BatchAdminRequest {
+public class BatchAdminRequest implements XmlRequest {
 
     /**
+     * Field 3
      * Data Length: 8 bytes, fixed
      * Data Element Type: Numeric
      * Required Field: Yes
      * Description: This field contains the version number that corresponds to the messages created per this specification.
-     * Valid value: 12010000
+     * <p>
+     * Example:<Version>12010000</Version>
      */
     protected String Version;
 
 
     /**
+     * Field 4
      * Data Length: 15 bytes, maximum
      * Data Element Type:  Numeric
      * Required Field: Yes
@@ -36,14 +41,19 @@ public class BatchAdminRequest {
      * A Merchant that intends to submit multiple currencies must request one SE Number for each submission currency.
      * All Service Establishment Numbers should be validated and must pass the Mod 9 check. For details,
      * refer to Cardmember Number Identification in the American Express Global Codes & Information Guide.
+     * <p>
+     * Example:<MerId>5021011432</MerId>
      */
     protected String MerId;
 
     /**
+     * Field 5
      * Data Length: 8 bytes, maximum
      * Data Element Type: Alphanumeric, upper case
      * Required Field: Yes
      * Description: This field contains a unique code that identifies a specific terminal at a Merchant location.
+     * <p>
+     * Example:<MerTrmnlId>80000011</MerTrmnlId>
      */
     protected String MerTrmnlId;
 
@@ -54,6 +64,8 @@ public class BatchAdminRequest {
      * <p>
      * Description: This field contains a unique Merchant- or submitter-assigned number
      * that identifies this batch.
+     * <p>
+     * Example:<BatchID>481035</BatchID>
      */
     protected String BatchID;
 
@@ -71,6 +83,8 @@ public class BatchAdminRequest {
      * 04 = Status
      * Note: American Express will close and process any batch left open for
      * over twenty-four (24) hours.
+     * <p>
+     * Example: <BatchOperation>01</BatchOperation>
      */
     protected String BatchOperation;
 
@@ -101,10 +115,18 @@ public class BatchAdminRequest {
      * <p>
      * Description: A unique identifier code assigned by American Express to submitters so they can directly access
      * American Express to deliver real-time settlement data
+     * <p>
+     * Example: <SubmitterCode>1234567890</SubmitterCode>
      */
     protected String SubmitterCode;
 
     @Tolerate
     public BatchAdminRequest() {
+    }
+
+    @Override
+    public String toXml() {
+        String xml = XmlUtility.getInstance().getString(this);
+        return "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml);
     }
 }

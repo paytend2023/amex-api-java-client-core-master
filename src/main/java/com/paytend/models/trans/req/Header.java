@@ -17,6 +17,7 @@ public class Header {
     private String message;
     private String merchNbr;
     private String rtInd;
+    private String host;
 
 
     public Map<String, String> buildHeaders() {
@@ -27,7 +28,8 @@ public class Header {
         headers.put("Message", message);
         headers.put("MerchNbr", merchNbr);
         headers.put("RtInd", rtInd);
-        return headers;
+        headers.put("Host", host);
+         return headers;
     }
 
     public static Map<String, String> defaultHeaders() {
@@ -38,6 +40,7 @@ public class Header {
                 .message("XML GCAG")
                 .merchNbr("3285220521")
                 .rtInd("050")
+                .host("https://qwww318.americanexpress.com/IPPayments/inter/CardAuthorization.do")
                 .build().buildHeaders();
     }
 }

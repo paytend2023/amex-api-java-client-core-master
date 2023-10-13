@@ -1,5 +1,6 @@
 package com.paytend.models.trans.req;
 
+import com.paytend.models.trans.XmlRequest;
 import io.aexp.api.client.core.utils.XmlUtility;
 import okhttp3.*;
 
@@ -18,7 +19,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class TransCommUtils {
 
-    private static String baseUrl = "https://qwww318.americanexpress.com/IPPayments/inter/CardAuthorization.do";
     private static Map<String, String> headers = new HashMap<>();
 
     private TransCommUtils() {
@@ -62,7 +62,6 @@ public class TransCommUtils {
         headers.put("User-Agent", "Application;");
         headers.put("Cashe-Control", "no-cache");
         headers.put("Connection", "Keep-Alive");
-        headers.put("Host", baseUrl);
     }
 
     private static final MediaType TEXT_MEDIA_TYPE = MediaType.parse("plain/text;");
@@ -72,26 +71,45 @@ public class TransCommUtils {
         return "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml);
     }
 
-    public static String sendXml(String xml, Map<String, String> customHeaders) throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse(baseUrl);
+//    public static String sendXml(String xml, Map<String, String> customHeaders) throws Exception {
+//        HttpUrl httpUrl = HttpUrl.parse(baseUrl);
+//        HttpUrl.Builder httpUrlBuilder = httpUrl.newBuilder();
+//        Request.Builder builder = new Request.Builder()
+//                .url(httpUrlBuilder.build())
+//                .post(RequestBody.create(TEXT_MEDIA_TYPE, toRequestString(xml)));
+//        for (Map.Entry<String, String> header : headers.entrySet()) {
+//            System.out.println(header.getKey() + " = " + header.getValue());
+//            builder.addHeader(header.getKey(), header.getValue());
+//        }
+//        for (Map.Entry<String, String> header : customHeaders.entrySet()) {
+//            System.out.println(header.getKey() + " = " + header.getValue());
+//            builder.addHeader(header.getKey(), header.getValue());
+//        }
+//
+//        Request request = builder.build();
+//        Response response = httpClient.newCall(request).execute();
+//        String tmp = response.body().string();
+//        System.out.println("" + response.code());
+//        System.out.println(XmlUtility.getInstance().xmlBeautifulFormat(tmp));
+//        return tmp;
+//    }
+
+    public static String sendXml(String url, XmlRequest xmlRequest, Map<String, String> customHeaders) throws Exception {
+        HttpUrl httpUrl = HttpUrl.parse(url);
         HttpUrl.Builder httpUrlBuilder = httpUrl.newBuilder();
         Request.Builder builder = new Request.Builder()
                 .url(httpUrlBuilder.build())
-                .post(RequestBody.create(TEXT_MEDIA_TYPE, toRequestString(xml)));
+                .post(RequestBody.create(TEXT_MEDIA_TYPE, xmlRequest.toXml()));
         for (Map.Entry<String, String> header : headers.entrySet()) {
-            System.out.println(header.getKey() + " = " + header.getValue());
             builder.addHeader(header.getKey(), header.getValue());
         }
         for (Map.Entry<String, String> header : customHeaders.entrySet()) {
-            System.out.println(header.getKey() + " = " + header.getValue());
             builder.addHeader(header.getKey(), header.getValue());
         }
 
         Request request = builder.build();
         Response response = httpClient.newCall(request).execute();
         String tmp = response.body().string();
-        System.out.println("" + response.code());
-        System.out.println(XmlUtility.getInstance().xmlBeautifulFormat(tmp));
         return tmp;
     }
 

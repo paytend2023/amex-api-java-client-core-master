@@ -4,6 +4,7 @@ package com.paytend.models.trans.req;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.paytend.models.trans.XmlRequest;
 import io.aexp.api.client.core.utils.XmlUtility;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -57,7 +58,7 @@ import lombok.experimental.Tolerate;
                 "AcptEnvData"
         })
 
-public class Authorization {
+public class Authorization implements XmlRequest {
 
     protected String MsgTypId;
 
@@ -255,4 +256,9 @@ public class Authorization {
     }
 
 
+    @Override
+    public String toXml() {
+        String xml = XmlUtility.getInstance().getString(this);
+        return "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml);
+    }
 }
