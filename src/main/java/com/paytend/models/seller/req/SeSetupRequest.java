@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 /**
- * array of objectsREQUIRED
+ * array of objects REQUIRED
  * Details for the new Seller set-up, maintenance of existing Sellers, and cancelled Sellers.
  *
  * @author gudongyang
@@ -43,7 +43,8 @@ public class SeSetupRequest {
      * se_detail_status_code
      * string, max: 1 REQUIRED
      * This alphanumeric field is used to notify American Express that a Seller is cancelled with the Participant.
-     * It is also used to notify American Express when a Seller is reinstated with the Participant. If there is no change in the Seller's status, leave this field blank. Valid values are:
+     * It is also used to notify American Express when a Seller is reinstated with the Participant.
+     * If there is no change in the Seller's status, leave this field blank. Valid values are:
      * D = Canceled Derogatory
      * N = Canceled Non-Derogatory
      * R = Reinstatement of previously canceled Seller.

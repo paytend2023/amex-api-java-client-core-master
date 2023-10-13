@@ -56,7 +56,8 @@ public class Owner {
      * Partnership Private
      * Sole Proprietorship
      * Non-Profit
-     * For the United Kingdom and European Economic Area (EEA) countries where the Beneficial Owner has been collected (as required by local regulation or internal policy),
+     * For the United Kingdom and European Economic Area (EEA) countries where the Beneficial Owner has been collected
+     * (as required by local regulation or internal policy),
      * it must be included. Entry must be significant characters only with no dashes, spaces, or other separators.
      */
     protected String identificationNumber;
