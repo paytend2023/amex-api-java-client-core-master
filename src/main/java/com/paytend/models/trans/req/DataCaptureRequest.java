@@ -1,6 +1,9 @@
 package com.paytend.models.trans.req;
 
+import com.paytend.models.trans.XmlRequest;
+import io.aexp.api.client.core.utils.XmlUtility;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import lombok.experimental.Tolerate;
 
 /**
@@ -9,61 +12,22 @@ import lombok.experimental.Tolerate;
  */
 @Getter
 @Setter
-@Builder
-public class DataCaptureRequest {
+@SuperBuilder
+public class DataCaptureRequest extends BaseSubmitRequest implements XmlRequest {
 
     /**
-     * Data Length: 8 bytes, fixed
-     * Data Element Type:Numeric
-     * Required Field: Yes
-     * Description:This field contains the version number that corresponds to the messages created per this specification.
-     * Valid value: 12010000
-     */
-    protected String Version;
-
-    /**
-     * Data Length: 15 bytes, maximum
-     * Data Element Type:  Numeric
-     * Required Field: Yes
-     * Description:This field contains the American Express-assigned Service Establishment (SE) Number that is used to
-     * identify and pay Merchants.The value entered in the MerId field must match the MerId entries in the corresponding
-     * Batch Administration Request Message. Each Merchant ID/SE Number can submit transactions in only one currency.
-     * A Merchant that intends to submit multiple currencies must request one SE Number for each submission currency.
-     * All Service Establishment Numbers should be validated and must pass the Mod 9 check. For details,
-     * see Check Digit Verification in the American Express Global Codes & Information Guide.
-     */
-    protected String MerId;
-
-    /**
-     * Data Length: 8 bytes
-     * Data Element Type: Alphanumeric
-     * Required Field: Yes
-     * <p>
-     * Description: This field contains a unique code that identifies a specific terminal at a Merchant location.
-     */
-    protected String MerTrmnlId;
-
-    /**
-     * Data Length: 6 bytes, maximum
-     * Data Element Type: Numeric
-     * Required Field: Yes
-     * <p>
-     * Description: This field contains a Merchant- or Submitter-assigned number that uniquely identifies this batch.
-     * This must be unique for the Merchant ID and Terminal ID combination for as long as the batch
-     * totals are maintained in the system (currently thirty (30) days).
-     */
-    protected String BatchID;
-
-    /**
+     * Field 8
      * Data Length: 13 bytes
      * Data Element Type: Alphanumeric
      * Required Field:  Yes
      * Description: This is a unique number assigned by the submitter to identify this transaction within a batch.
      * This is important for identifying VOID capture messages.
+     * Example: <RefNumber>123456</RefNumber>
      */
     protected String RefNumber;
 
     /**
+     * Field 9
      * Data Length: 30 bytes
      * Data Element Type: Alphanumeric, upper case, left justified, character space filled
      * Required Field:No
@@ -95,8 +59,9 @@ public class DataCaptureRequest {
      * For details, refer to Cardmember Number Identification in the American Express Global Codes & Information Guide.
      * All Primary Account Numbers should be validated. For details, refer to Cardmember Number Identification
      * in the American Express Global Codes & Information Guide.
+     * Example: <CardNbr>XXXXXXXXXXXXXXX</CardNbr>
      */
-    protected String CardNbr;
+    protected long CardNbr;
 
     /**
      * Data Length: 4 bytes, fixed
@@ -160,7 +125,7 @@ public class DataCaptureRequest {
      * <p>
      * Example: <TransAmt>10000</TransAmt>
      */
-    protected String TransAmt;
+    protected long TransAmt;
 
     /**
      * Data Length:3 bytes, fixed
@@ -202,6 +167,7 @@ public class DataCaptureRequest {
      * Example: <TransProcCd>000000</TransProcCd>
      */
     protected String TransProcCd;
+
     /**
      * Data Length: 15 bytes, fixed
      * Data Element Type: Numeric
@@ -240,6 +206,9 @@ public class DataCaptureRequest {
     protected String TransAprvCd;
 
 
+    /**
+     * * Required Field: Yes
+     */
     protected PointOfServiceData PointOfServiceData;
 
 
@@ -284,6 +253,7 @@ public class DataCaptureRequest {
      * Example: <MediaCd>01</MediaCd>
      */
     protected String MediaCd;
+
     /**
      * Data Length: 2 bytes, fixed
      * Data Element Type:Numeric
@@ -303,6 +273,7 @@ public class DataCaptureRequest {
      * Example: <SubmMthdCd>01</SubmMthdCd>
      */
     protected String SubmMthdCd;
+
     /**
      * Data Length:15 bytes, maximum
      * Data Element Type: Alphanumeric, upper case
@@ -457,52 +428,7 @@ public class DataCaptureRequest {
      */
     protected CardTransDetail CardTransDetail;
 
-    /**
-     * Field 44
-     */
-    protected AddAmtInfo AddAmtInfo;
 
-
-    /**
-     * Data Length: 3 bytes, fixed
-     * Data Element Type: Numeric
-     * Required Field: Yes - if CardTransDetail is provided
-     * Description: This field contains the type code that corresponds to the amount.
-     * The AddAmtTypeCd field contains the type code that corresponds to
-     * the amount in the AddAmt field that immediately follows this entry.
-     * During certification, authorized Third Party Processors and Vendors are required to demonstrate the ability to provide and transmit appropriate and meaningful information in these optional fields, as well as all required fields.
-     * If the AddAmt field is provided, the AddAmtTypeCd field must also contain data.
-     * See Additional Amount Type Codes on next page.
-     * <p>
-     * Example: <AddAmtTypeCd>016</AddAmtTypeCd>
-     */
-    protected String AddAmtTypeCd;
-
-    /**
-     * Field 46
-     * Data Length: 12 bytes, maximum
-     * Data Element Type: Numeric
-     * Required Field: Yes - if CardTransDetail is provided
-     * Description: This field contains the amount that corresponds to the AddAmtTypeCd entries in this Additional Amount field set. This entry must be in the currency designated by the TransCurrCd field in this Data Capture Request Message.
-     * During certification, authorized Third Party Processors and Vendors are required to demonstrate the ability to provide and transmit appropriate and meaningful information in these optional fields, as well as all required fields.
-     * The sign in the SignInd field that immediately follows this entry indicates whether this amount is a debit (+) or credit (-) as applied to the Cardmember’s account.
-     * For information on currencies approved for submission, maximum values and decimal point positions, refer to the American Express Global Codes & Information Guide.
-     * If the AddAmtTypeCd field is provided, the AddAmt field must also contain data.
-     * See Additional Amount Type Codes starting on page 106.
-     * Example: <AddAmt>10000</AddAmt>
-     */
-    protected String AddAmt;
-    /**
-     * Data Length:  1 byte
-     * Data Element Type: Alphanumeric
-     * Required Field: Yes - if CardTransDetail is provided
-     * Description:  This field contains a sign that indicates whether the corresponding AddAmtTypeCd field that immediately precedes this entry is a debit (+) or credit (-) as applied to the Cardmember’s account.
-     * During certification, authorized Third Party Processors and Vendors are required to demonstrate the ability to provide and transmit appropriate and meaningful information in these optional fields, as well as all required fields.
-     * The valid values include “+” or “-”.
-     * <p>
-     * Example:<SignInd>+</SignInd>
-     */
-    protected String SignInd;
     /**
      * Field 48
      * Data Element Type: Data Length:2 bytes, fixed
@@ -510,19 +436,21 @@ public class DataCaptureRequest {
      * Required Field: Yes - if industry-specific detail is to be included with this Data Capture Request Message
      * No - all other transactions
      * Description: This field contains a code that indicates the type of industry detail that appears in this Data Capture Request Message.
-     * Submitters wanting to transmit industry information must certify for the appropriate industry-related fields. See Sections 8.1 through 8.10 for specific industry details.
-     * Note: The transaction will be rejected if the TransAddCd tag is not provided and industry-specific addendum information is provided. Data Capture Request Messages can only contain information related to one industry.
+     * Submitters wanting to transmit industry information must certify for the appropriate industry-related fields.
+     * See Sections 8.1 through 8.10 for specific industry details.
+     * Note: The transaction will be rejected if the TransAddCd tag is not provided and industry-specific addendum information is provided.
+     * Data Capture Request Messages can only contain information related to one industry.
      * The valid values include:
      * <p>
-     * 01 =  Airline
-     * 04 =  Insurance
+     * 01 = Airline
+     * 04 = Insurance
      * 05 = Auto Rental
-     * 06 =  Rail
-     * 11 =Lodging
+     * 06 = Rail
+     * 11 = Lodging
      * 13 = Communication Services
      * 14 = Travel/Cruise
-     * 20=Retail
-     * 22 =Entertainment/Ticketing
+     * 20 = Retail
+     * 22 = Entertainment/Ticketing
      * Example: <TransAddCd>01</TransAddCd>
      */
     protected String TransAddCd;
@@ -532,5 +460,9 @@ public class DataCaptureRequest {
     public DataCaptureRequest() {
     }
 
-
+    @Override
+    public String toXml() {
+        String xml = XmlUtility.getInstance().getString(this);
+        return "AuthorizationRequestParam=<?xml version=\"1.0\" encoding=\"utf-8\"?>" + XmlUtility.getInstance().formatXml(xml);
+    }
 }

@@ -34,22 +34,11 @@ public class BatchAdminRequestTest {
             .host(url)
             .build().buildHeaders();
 
-    Map<String, String> dataCaptureRequest = Header.builder()
-            .origin("Paytend")
-            .country("276")
-            .region("EMEA")
-            .message("GFSG XML DCR")
-            .merchNbr("3285220521")
-            .rtInd("015")
-            .host(url)
-            .build().buildHeaders();
 
     int version = 12010000;
     String merId = "8127921740";
-    String termId ="80000011";
-    int batchID = 100000;
-    int submitterId = 106544;
-    String  submitterCode = "8038464327";
+    String termId = "80000011";
+    String submitterCode = "8038464327";
 
     /**
      * AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><BatchAdminRequest><Version>12010000</Version><MerId>8127921740</MerId><BatchID>100000</BatchID><MerTrmnlId>80000011</MerTrmnlId><BatchOperation>01</BatchOperation><CardAcceptorDetail><CardAcptStreetNm>VilniusCitysav</CardAcptStreetNm><CardAcptNm>PAYTENDEUROPEUAB</CardAcptNm><CardAcptCityNm>Vilnius</CardAcptCityNm><CardAcptCtryCd>440</CardAcptCtryCd><CardAcptRgnCd>58</CardAcptRgnCd><CardAcptPostCd>01113</CardAcptPostCd></CardAcceptorDetail><SubmitterCode>8038464327</SubmitterCode></BatchAdminRequest>
@@ -57,18 +46,27 @@ public class BatchAdminRequestTest {
      * <!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
      * <!-- Content-Type: text/xml -->
      * <BatchAdminResponse>
-     *   <Version>12010000</Version>
-     *   <MerId>8127921740</MerId>
-     *   <MerTrmnlId>80000011</MerTrmnlId>
-     *   <BatchID>100000</BatchID>
-     *   <BatchStatus>000</BatchStatus>
-     *   <BatchStatusText>Open</BatchStatusText>
+     * <Version>12010000</Version>
+     * <MerId>8127921740</MerId>
+     * <MerTrmnlId>80000011</MerTrmnlId>
+     * <BatchID>100000</BatchID>
+     * <BatchStatus>000</BatchStatus>
+     * <BatchStatusText>Open</BatchStatusText>
      * </BatchAdminResponse>
+     *
      * @throws Exception
      */
     @Test
-    public void testBatchAdminRequest() throws Exception {
-        BatchAdminRequest batchAdminRequest = BatchAdminRequest.builder()
+    public void testBatchOperation() throws Exception {
+        /**
+         * 01 = Open
+         * 02 = Close
+         * 03 = Purge
+         * 04 = Status
+         */
+        int batchID = 100002;
+        String respXml = null;
+        BatchAdminRequest batchOpen = BatchAdminRequest.builder()
                 .Version(String.valueOf(version))
                 .MerId(merId)
                 .BatchID(String.valueOf(batchID))
@@ -78,8 +76,77 @@ public class BatchAdminRequestTest {
                 .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
                 .SubmitterCode(submitterCode)
                 .build();
-        System.out.println(batchAdminRequest.toXml());
-        String respXml = TransCommUtils.sendXml(url, batchAdminRequest, headersBatchAdmin);
-        System.out.println(respXml);
+        respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
+        System.out.println("batchOpen:" + respXml);
+
+        BatchAdminRequest batchPurge = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //Purge
+                .BatchOperation("03")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        respXml = TransCommUtils.sendXml(url, batchPurge, headersBatchAdmin);
+        System.out.println("purge:" + respXml);
+
+        BatchAdminRequest batchStatus1 = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //Purge
+                .BatchOperation("04")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        respXml = TransCommUtils.sendXml(url, batchStatus1, headersBatchAdmin);
+        System.out.println("batchStatus1:" + respXml);
+
+        BatchAdminRequest batchClose = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //close
+                .BatchOperation("02")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        respXml = TransCommUtils.sendXml(url, batchClose, headersBatchAdmin);
+        System.out.println("batchClose:" + respXml);
+
+        BatchAdminRequest batchStatus2 = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //Purge
+                .BatchOperation("04")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        respXml = TransCommUtils.sendXml(url, batchStatus2, headersBatchAdmin);
+        System.out.println("batchStatus2:" + respXml);
+    }
+
+    @Test
+    public void testBatchDataOpen () throws Exception {
+        int batchID = 100003;
+        String respXml = null;
+        BatchAdminRequest batchOpen = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //open
+                .BatchOperation("01")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
+        System.out.println("batchOpen:" + respXml);
     }
 }
