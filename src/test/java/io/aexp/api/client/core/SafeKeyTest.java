@@ -282,6 +282,7 @@ public class SafeKeyTest {
         Authorization authorization = factory.create();
         System.out.println(authorization.toXMLString());
         String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+        System.out.println(responseStr);
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
     }
@@ -1346,18 +1347,14 @@ public class SafeKeyTest {
 
 
     /**
-     * 授权 和授权调整
+     * SK001 refund
      *
      * @throws Exception
      */
     @Test
-    public void testRefund() throws Exception {
-
-        long pan = 374500261001009L;
-        pan = 376701078252003L;
-        String tmp = String.valueOf(System.currentTimeMillis() - pan);
-        tmp = DateUtil.format(new Date(), "yyyyMMddHHmmss");
-        AuthorizationFactory.AuthorizationConfig refundConfig =
+    public void refund() throws Exception {
+//        SK001 refund
+        AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
                         .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
@@ -1367,28 +1364,39 @@ public class SafeKeyTest {
                         .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
                         .acptEnvDataBuilder(acptEnvDataBuilder)
                         .build();
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
+        long pan = 374500261001009L;
+        long amt = 1600;
+        String tmp = "000000" + new Random().nextLong();
+//        authorizationBuilder.CardNbr(String.valueOf(pan))
+//                .TransAmt(String.valueOf(amt))
+//                .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
+//        AuthorizationFactory factory = new AuthorizationFactory(config);
+////        Authorization authorization = factory.create();
+////        System.out.println(authorization.toXMLString());
+////        String responseStr = TransCommUtils.sendXml(url, authorization, Header.defaultHeaders());
+////        System.out.println(responseStr);
+////        AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
+////
 
+        String responseStr;
+        AuthorizationRsp response;
+        System.out.println("====================================================");
 
-
-
-
-        AuthorizationFactory refundFactory = new AuthorizationFactory(refundConfig);
-
+        AuthorizationFactory refundFactory = new AuthorizationFactory(config);
         authorizationBuilder.CardNbr(String.valueOf(pan))
-                .TransAmt(String.valueOf(10))
-                .NatlUseData(NatlUseData.builder()
-                        .OriginalTransId("000002523903545")
-                        .build())
-                .MerSysTraceAudNbr(Optional.of(System.currentTimeMillis() + "").map((s) -> s.substring(s.length() - 6)).get());
-
-
+                .TransAmt(String.valueOf(amt))
+                .MerSysTraceAudNbr(Optional.of(System.currentTimeMillis() + "").map((s) -> s.substring(s.length() - 6)).get())
+                .NatlUseData(NatlUseData.builder().OriginalTransId("000002529199380").build())
+        ;
 
         authorizationBuilder.TransProcCd("200000");
         Authorization request = refundFactory.create();
         System.out.println("request:" + request.toXMLString());
-        String responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
+        responseStr = TransCommUtils.sendXml(url, request, Header.defaultHeaders());
         System.out.println(responseStr);
-        AuthorizationRsp response;
         response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
         System.out.println(response);
 

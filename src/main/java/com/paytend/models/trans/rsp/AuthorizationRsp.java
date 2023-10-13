@@ -13,13 +13,13 @@ import lombok.experimental.Tolerate;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class AuthorizationRsp extends BaseFields {
 
     /**
      * bit 38
      */
-    String TransAprvCd;
+    String transAprvCd;
 
     /**
      * 000 Approved
@@ -51,7 +51,6 @@ public class AuthorizationRsp extends BaseFields {
      * 978 Invalid Payment Times
      * bit 39
      */
-    String TransActCd;
-
+    String transActCd;
 
 }

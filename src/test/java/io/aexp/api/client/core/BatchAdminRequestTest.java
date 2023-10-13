@@ -4,6 +4,8 @@ import com.paytend.models.trans.req.BatchAdminRequest;
 import com.paytend.models.trans.req.CardAcceptorDetail;
 import com.paytend.models.trans.req.Header;
 import com.paytend.models.trans.req.TransCommUtils;
+import com.paytend.models.trans.rsp.BatchResp;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Map;
@@ -37,7 +39,7 @@ public class BatchAdminRequestTest {
 
     int version = 12010000;
     String merId = "8127921740";
-    String termId = "80000011";
+    String termId = "00000001";
     String submitterCode = "8038464327";
 
     /**
@@ -133,7 +135,7 @@ public class BatchAdminRequestTest {
     }
 
     @Test
-    public void testBatchDataOpen () throws Exception {
+    public void testBatchDataOpen() throws Exception {
         int batchID = 100003;
         String respXml = null;
         BatchAdminRequest batchOpen = BatchAdminRequest.builder()
@@ -148,5 +150,32 @@ public class BatchAdminRequestTest {
                 .build();
         respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
         System.out.println("batchOpen:" + respXml);
+        BatchResp batchResp = BatchResp.createByXml(respXml);
+        System.out.println("batchResp:" + batchResp);
+        Assert.assertEquals("000", batchResp.getBatchStatus());
+        Assert.assertEquals(batchID + "", batchResp.getBatchID());
+    }
+
+
+    @Test
+    public void testBatchDataClose() throws Exception {
+        int batchID = 100003;
+        String respXml = null;
+        BatchAdminRequest batchOpen = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //close
+                .BatchOperation("02")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        respXml = TransCommUtils.sendXml(url, batchOpen, headersBatchAdmin);
+        System.out.println("batchOpen:" + respXml);
+        BatchResp batchResp = BatchResp.createByXml(respXml);
+
+        Assert.assertEquals("001", batchResp.getBatchStatus());
+        Assert.assertEquals(String.valueOf(batchID), batchResp.getBatchID());
     }
 }
