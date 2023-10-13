@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author gudongyang
+ * @author
  */
 @Builder
 public class Header {
@@ -15,6 +15,8 @@ public class Header {
     private String country;
     private String region;
     private String message;
+
+    //  SE Number / Merchant Number
     private String merchNbr;
     private String rtInd;
     private String host;

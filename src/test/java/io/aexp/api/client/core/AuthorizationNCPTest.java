@@ -354,6 +354,7 @@ public class AuthorizationNCPTest {
     @Test
     public void checkBase64() {
 //        0000010567123487637946538663470000000000
+        System.out.println(HexUtil.encodeHexStr(Base64.decode("AAABBCIVBTJySIVVZhUFAAAAAAA=")));
         System.out.println(HexUtil.encodeHexStr(Base64.decode("AAABBWcSNIdjeUZThmNHAAAAAAA=")));
          System.out.println(Base64.encode(HexUtil.decodeHex("0000010567123487637946538663470000000000")));
         System.out.println(HexUtil.encodeHexStr(BaseEncoding.base64().decode("AAABAURAWAAAAAAAAEBYAAAAAAA=")));

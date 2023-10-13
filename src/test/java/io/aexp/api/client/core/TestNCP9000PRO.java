@@ -3,12 +3,14 @@ package io.aexp.api.client.core;
 import cn.hutool.core.date.DateUtil;
 import com.paytend.models.trans.req.*;
 import com.paytend.models.trans.rsp.AuthorizationRsp;
+import com.paytend.models.trans.rsp.BatchResp;
 import io.aexp.api.client.core.utils.XmlUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -16,7 +18,7 @@ import java.util.Random;
  */
 @Slf4j
 public class TestNCP9000PRO {
-    private static String url = "https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do\n";
+    private static String url = "https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do";
 
 
     Authorization.AuthorizationBuilder
@@ -114,7 +116,7 @@ public class TestNCP9000PRO {
     @Test
     public void test9050() throws Exception {
         long pan = 378330600475458L;
-        long amt = 100;
+        long amt = 10100;
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
@@ -140,7 +142,7 @@ public class TestNCP9000PRO {
                 .message("XML GCAG")
                 .merchNbr("8127478295")
                 .rtInd("000")
-                .host("https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do")
+                .host(url)
                 .build();
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
@@ -153,4 +155,125 @@ public class TestNCP9000PRO {
         Assert.assertNotEquals(response.getTransActCd(), "181");
         Assert.assertEquals(response.getTransActCd(), "000");
     }
+
+
+    int version = 12010000;
+    //        String merId = "900000000000001";
+    String merId = "8127478295";
+    String termId = "00000001";
+    //        String submitterCode = "106544";
+    String submitterCode = "8038464327";
+
+    Map<String, String> headersBatchAdmin = Header.builder()
+            .origin("Paytend")
+            .country("978")
+            .region("EMEA")
+            .message("GFSG XML BAR")
+            .merchNbr("8127478295")
+            .rtInd("015")
+            .host(url)
+            .build().buildHeaders();
+
+    int batchID = 100000;
+    @Test
+    public void testBatchDataOpen() throws Exception {
+
+        String respXml = null;
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> batchOpen:{}", batchID);
+        BatchAdminRequest batchOpen = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //open
+                .BatchOperation("01")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        log.info("batchOpen:{}", batchOpen.toXml());
+
+
+
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchOpen, headersBatchAdmin);
+        BatchResp batchResp = BatchResp.createByXml(respXml);
+        log.info("batchOpenResp:{}", batchResp);
+        Assert.assertEquals("000", batchResp.getBatchStatus());
+        Assert.assertEquals(batchID + "", batchResp.getBatchID());
+    }
+
+    @Test
+    public void testDataCaptureRequest() throws Exception {
+        int batchID = 100000;
+        Long cardAsn = 378330600475458L;
+        Long amount = 10100L;
+
+        String TransId = "006099677590321";
+        String TransAprvCd = "048073";
+
+        String RefNumber = TransId.substring(2);
+        //debit/Purchase 000000      credit/refund 200000
+        String TransProcCd = "000000";
+        String sellId = "900000000000001";
+        String mcc = "7996";
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DataCapture batchID {}  RefNumber {} TransProcCd {} TransId {} TransAprvCd {}  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+                batchID, RefNumber, TransProcCd, TransId, TransAprvCd);
+        DataCaptureRequest dataCaptureRequest = DataCaptureRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                .RefNumber(RefNumber)
+                .CardNbr(cardAsn)
+                .TransDt(DateUtil.format(new Date(), "yyyyMMdd"))
+                .TransAmt(amount)
+                //Euro
+                .TransCurrCd("978")
+                .TransProcCd(TransProcCd)
+                .TransId(TransId)  //交易唯一标识
+                .ElecComrceInd("05")
+                .TransAprvCd(TransAprvCd) //授权码
+                .PointOfServiceData(pointOfServiceDataBuilder.build())
+//                .DefPaymentPlan("0005")
+                .MerCtgyCd(mcc)
+                .SellId(sellId)
+                .build();
+
+        Map<String, String> dataCaptureHeaders = Header.builder()
+                .origin("Paytend")
+                .country("978")
+                .region("EMEA")
+                .message("GFSG XML DCR")
+                .merchNbr("8127478295")
+                .rtInd("015")
+                .host(url)
+                .build().buildHeaders();
+        log.info("dataCaptureRequest:{}", dataCaptureRequest.toXml());
+        String respXml = TransCommUtils.getTestInstance().sendXml(url, dataCaptureRequest, dataCaptureHeaders);
+        log.info("dataCaptureResponse:{}", respXml);
+
+    }
+
+
+    @Test
+    public void testBatchDataClose() throws Exception {
+        String respXml = null;
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> batchClose:{}", batchID);
+        BatchAdminRequest batchClosed = BatchAdminRequest.builder()
+                .Version(String.valueOf(version))
+                .MerId(merId)
+                .BatchID(String.valueOf(batchID))
+                .MerTrmnlId(termId)
+                //close
+                .BatchOperation("02")
+                .CardAcceptorDetail(cardAcceptorDetailBuilder.build())
+                .SubmitterCode(submitterCode)
+                .build();
+        log.info("BatchDataClose:{}", batchClosed.toXml());
+        respXml = TransCommUtils.getTestInstance().sendXml(url, batchClosed, headersBatchAdmin);
+        log.info("BatchDataCloseResp:{}", respXml);
+        BatchResp batchResp = BatchResp.createByXml(respXml);
+        Assert.assertEquals("001", batchResp.getBatchStatus());
+        Assert.assertEquals(String.valueOf(batchID), batchResp.getBatchID());
+    }
+
 }

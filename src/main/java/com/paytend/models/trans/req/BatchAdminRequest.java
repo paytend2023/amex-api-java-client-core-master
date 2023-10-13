@@ -67,7 +67,8 @@ public class BatchAdminRequest extends BaseSubmitRequest implements XmlRequest {
      * Yes - If Batch Open and Batch Close messages
      * No - If Batch Purge and Batch Status messages
      * <p>
-     * Description: A unique identifier code assigned by American Express to submitters so they can directly access
+     * Description: A unique identifier code assigned by American Express to submitters
+     * so they can directly access
      * American Express to deliver real-time settlement data
      * <p>
      * Example: <SubmitterCode>1234567890</SubmitterCode>

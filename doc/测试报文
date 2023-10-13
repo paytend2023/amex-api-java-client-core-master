@@ -1,0 +1,198 @@
+open batch  100003
+
+
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100003</BatchID>
+  <BatchStatus>000</BatchStatus>
+  <BatchStatusText>Open</BatchStatusText>
+</BatchAdminResponse>
+
+batchResp:BatchResp(version=12010000, merId=8127921740, merTrmnlId=00000001, batchID=100003, batchStatus=000, batchStatusText=Open)
+
+SK001 
+
+<CardTransaction>
+  <MsgTypId>1100</MsgTypId>
+  <CardNbr>374500261001009</CardNbr>
+  <TransProcCd>004000</TransProcCd>
+  <TransAmt>1600</TransAmt>
+  <TransTs>230902102252</TransTs>
+  <AcqInstCtryCd>276</AcqInstCtryCd>
+  <PointOfServiceData>
+    <CardDataInpCpblCd>1</CardDataInpCpblCd>
+    <CardCptrCpblCd>0</CardCptrCpblCd>
+    <OprEnvirCd>0</OprEnvirCd>
+    <CardPresentCd>0</CardPresentCd>
+    <CardDataInpModeCd>1</CardDataInpModeCd>
+    <CardDataOpCpblCd>0</CardDataOpCpblCd>
+    <TrmnlOpCpblCd>1</TrmnlOpCpblCd>
+    <CMAuthnCpblCd>6</CMAuthnCpblCd>
+    <CMPresentCd>1</CMPresentCd>
+    <CMAuthnMthdCd>0</CMAuthnMthdCd>
+    <CMAuthnEnttyCd>0</CMAuthnEnttyCd>
+    <PINCptrCpblCd>0</PINCptrCpblCd>
+  </PointOfServiceData>
+  <FuncCd>100</FuncCd>
+  <MsgRsnCd>1900</MsgRsnCd>
+  <MerCtgyCd>4111</MerCtgyCd>
+  <RtrvRefNbr>230902102252</RtrvRefNbr>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <CardAcceptorIdentification>
+    <MerId>8127921740</MerId>
+  </CardAcceptorIdentification>
+  <CardAcceptorDetail>
+    <CardAcptNm>PAYTEND EUROPE UAB</CardAcptNm>
+    <CardAcptStreetNm>Vilnius City sav</CardAcptStreetNm>
+    <CardAcptCityNm>Vilnius</CardAcptCityNm>
+    <CardAcptCtryCd>440</CardAcptCtryCd>
+    <CardAcptRgnCd>58</CardAcptRgnCd>
+    <CardAcptPostCd>01113</CardAcptPostCd>
+  </CardAcceptorDetail>
+  <AdditionalDataNational>
+    <CardNotPresentData>
+      <CustEmailAddr>king.gu@gmail.com</CustEmailAddr>
+      <CustHostServerNm>www.baidu.com</CustHostServerNm>
+      <CustBrowserTypDescTxt>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)</CustBrowserTypDescTxt>
+      <ShipToCtryCd>440</ShipToCtryCd>
+      <ShipMthdCd>01</ShipMthdCd>
+      <MerSKUNbr>TKDC315U</MerSKUNbr>
+      <CustIPAddr>127.142.5.56</CustIPAddr>
+      <CustIdPhoneNbr>13651654626</CustIdPhoneNbr>
+      <CallTypId>61</CallTypId>
+    </CardNotPresentData>
+  </AdditionalDataNational>
+  <TransCurrCd>978</TransCurrCd>
+  <SecureAuthenticationSafeKey>
+    <AmexExpVerificationValTxt>0000010567123487637946538663470000000000</AmexExpVerificationValTxt>
+    <ScndIdCd>ASK</ScndIdCd>
+    <ElecComrceInd>05</ElecComrceInd>
+    <AESKTransId>3132333435363738393031323334353637383930</AESKTransId>
+  </SecureAuthenticationSafeKey>
+  <AcptEnvData>
+    <Psd2Exemptions>
+      <EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd>
+      <AuthOutageInd>0</AuthOutageInd>
+    </Psd2Exemptions>
+    <InitPartyInd>1</InitPartyInd>
+  </AcptEnvData>
+  <MerSysTraceAudNbr>945070</MerSysTraceAudNbr>
+  <CardExprDt>2501</CardExprDt>
+</CardTransaction>
+
+<?xml version="1.0" encoding="UTF-8"?><CardTransaction><MsgTypId>1110</MsgTypId><CardNbr>374500261001009</CardNbr><TransProcCd>004000</TransProcCd><TransAmt>1600</TransAmt><MerSysTraceAudNbr>945070</MerSysTraceAudNbr><TransTs>230902102252</TransTs><TransId>000002529199380</TransId><RtrvRefNbr>230902102252</RtrvRefNbr><TransAprvCd>199380</TransAprvCd><MerTrmnlId>00000001</MerTrmnlId><CardAcceptorIdentification><MerId>8127921740</MerId></CardAcceptorIdentification><TransCurrCd>978</TransCurrCd><TransActCd>000</TransActCd><AcptEnvData><Psd2Exemptions><EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd><AuthOutageInd>0</AuthOutageInd></Psd2Exemptions><InitPartyInd>1</InitPartyInd></AcptEnvData><SecureAuthenticationSafeKey><ScndIdCd>ASK</ScndIdCd><AEVVRsltInd>2</AEVVRsltInd></SecureAuthenticationSafeKey><VerificationInformation><ServId>AX</ServId><ReqTypId>AE</ReqTypId></VerificationInformation></CardTransaction>
+AuthorizationRsp(transAprvCd=199380, transActCd=000, transId=000002529199380)
+
+
+
+结算
+
+AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><RefNumber>000001</RefNumber><TransAmt>1600</TransAmt><TransCurrCd>978</TransCurrCd><TransProcCd>000000</TransProcCd><TransAprvCd>199380</TransAprvCd><PointOfServiceData><CardDataInpCpblCd>1</CardDataInpCpblCd><CardCptrCpblCd>0</CardCptrCpblCd><OprEnvirCd>0</OprEnvirCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>3</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><MerCtgyCd>4111</MerCtgyCd><CardNbr>374500261001009</CardNbr><TransDt>20230902</TransDt><TransId>000002529199380</TransId><SellId>1234QR7890</SellId><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><MerId>8127921740</MerId><BatchID>100003</BatchID></DataCaptureRequest>
+batchStatus1:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - DataCapture Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<DataCaptureResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100003</BatchID>
+  <RefNumber>000001</RefNumber>
+  <StatusCode>007</StatusCode>
+  <StatusText>Warning: 319 Invalid or Missing Transaction ID</StatusText>
+</DataCaptureResponse>
+
+
+关闭批次
+batchOpen:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127921740</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100003</BatchID>
+  <BatchStatus>001</BatchStatus>
+  <BatchStatusText>Close</BatchStatusText>
+</BatchAdminResponse>
+
+
+
+退货
+request:<CardTransaction>
+  <MsgTypId>1100</MsgTypId>
+  <CardNbr>374500261001009</CardNbr>
+  <TransProcCd>200000</TransProcCd>
+  <TransAmt>1600</TransAmt>
+  <TransTs>230902104056</TransTs>
+  <AcqInstCtryCd>276</AcqInstCtryCd>
+  <PointOfServiceData>
+    <CardDataInpCpblCd>1</CardDataInpCpblCd>
+    <CardCptrCpblCd>0</CardCptrCpblCd>
+    <OprEnvirCd>0</OprEnvirCd>
+    <CardPresentCd>0</CardPresentCd>
+    <CardDataInpModeCd>1</CardDataInpModeCd>
+    <CardDataOpCpblCd>0</CardDataOpCpblCd>
+    <TrmnlOpCpblCd>1</TrmnlOpCpblCd>
+    <CMAuthnCpblCd>6</CMAuthnCpblCd>
+    <CMPresentCd>1</CMPresentCd>
+    <CMAuthnMthdCd>0</CMAuthnMthdCd>
+    <CMAuthnEnttyCd>0</CMAuthnEnttyCd>
+    <PINCptrCpblCd>0</PINCptrCpblCd>
+  </PointOfServiceData>
+  <FuncCd>100</FuncCd>
+  <MsgRsnCd>1900</MsgRsnCd>
+  <MerCtgyCd>4111</MerCtgyCd>
+  <RtrvRefNbr>230902104056</RtrvRefNbr>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <CardAcceptorIdentification>
+    <MerId>8127921740</MerId>
+  </CardAcceptorIdentification>
+  <CardAcceptorDetail>
+    <CardAcptNm>PAYTEND EUROPE UAB</CardAcptNm>
+    <CardAcptStreetNm>Vilnius City sav</CardAcptStreetNm>
+    <CardAcptCityNm>Vilnius</CardAcptCityNm>
+    <CardAcptCtryCd>440</CardAcptCtryCd>
+    <CardAcptRgnCd>58</CardAcptRgnCd>
+    <CardAcptPostCd>01113</CardAcptPostCd>
+  </CardAcceptorDetail>
+  <AdditionalDataNational>
+    <CardNotPresentData>
+      <CustEmailAddr>king.gu@gmail.com</CustEmailAddr>
+      <CustHostServerNm>www.baidu.com</CustHostServerNm>
+      <CustBrowserTypDescTxt>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)</CustBrowserTypDescTxt>
+      <ShipToCtryCd>440</ShipToCtryCd>
+      <ShipMthdCd>01</ShipMthdCd>
+      <MerSKUNbr>TKDC315U</MerSKUNbr>
+      <CustIPAddr>127.142.5.56</CustIPAddr>
+      <CustIdPhoneNbr>13651654626</CustIdPhoneNbr>
+      <CallTypId>61</CallTypId>
+    </CardNotPresentData>
+  </AdditionalDataNational>
+  <TransCurrCd>978</TransCurrCd>
+  <NatlUseData>
+    <OriginalTransId>000002529199380</OriginalTransId>
+  </NatlUseData>
+  <SecureAuthenticationSafeKey>
+    <AmexExpVerificationValTxt>0000010567123487637946538663470000000000</AmexExpVerificationValTxt>
+    <ScndIdCd>ASK</ScndIdCd>
+    <ElecComrceInd>05</ElecComrceInd>
+    <AESKTransId>3132333435363738393031323334353637383930</AESKTransId>
+  </SecureAuthenticationSafeKey>
+  <AcptEnvData>
+    <Psd2Exemptions>
+      <EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd>
+      <AuthOutageInd>0</AuthOutageInd>
+    </Psd2Exemptions>
+    <InitPartyInd>1</InitPartyInd>
+  </AcptEnvData>
+  <CardExprDt>2501</CardExprDt>
+  <MerSysTraceAudNbr>456735</MerSysTraceAudNbr>
+</CardTransaction>
+
+<?xml version="1.0" encoding="UTF-8"?><CardTransaction><MsgTypId>1110</MsgTypId><CardNbr>374500261001009</CardNbr><TransProcCd>200000</TransProcCd><TransAmt>1600</TransAmt><MerSysTraceAudNbr>456735</MerSysTraceAudNbr><TransTs>230902104056</TransTs><TransId>000002529212713</TransId><RtrvRefNbr>230902104056</RtrvRefNbr><TransAprvCd>212713</TransAprvCd><MerTrmnlId>00000001</MerTrmnlId><CardAcceptorIdentification><MerId>8127921740</MerId></CardAcceptorIdentification><TransCurrCd>978</TransCurrCd><TransActCd>000</TransActCd><NatlUseData><OriginalTransId>000002529199380</OriginalTransId></NatlUseData><AcptEnvData><Psd2Exemptions><EuPsd2SecCorpPayInd>0</EuPsd2SecCorpPayInd><AuthOutageInd>0</AuthOutageInd></Psd2Exemptions><InitPartyInd>1</InitPartyInd></AcptEnvData><SecureAuthenticationSafeKey><ScndIdCd>ASK</ScndIdCd><AEVVRsltInd>2</AEVVRsltInd></SecureAuthenticationSafeKey><VerificationInformation><ServId>AX</ServId><ReqTypId>AE</ReqTypId></VerificationInformation></CardTransaction>
+AuthorizationRsp(super=com.paytend.models.trans.rsp.AuthorizationRsp@16ce702d, transAprvCd=212713, transActCd=000)
+
+
+

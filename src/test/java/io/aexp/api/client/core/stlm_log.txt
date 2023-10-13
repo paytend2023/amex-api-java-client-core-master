@@ -1,0 +1,118 @@
+信息: batchOpen:AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><BatchAdminRequest><SubmitterCode>8038464327</SubmitterCode><BatchOperation>01</BatchOperation><CardAcceptorDetail><CardAcptNm>PAYTENDEUROPEUAB</CardAcptNm><CardAcptStreetNm>VilniusCitysav</CardAcptStreetNm><CardAcptCityNm>Vilnius</CardAcptCityNm><CardAcptCtryCd>440</CardAcptCtryCd><CardAcptRgnCd>58</CardAcptRgnCd><CardAcptPostCd>01113</CardAcptPostCd></CardAcceptorDetail><MerId>8127478295</MerId><BatchID>100000</BatchID><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId></BatchAdminRequest>
+十月 10, 2023 3:28:03 下午 com.paytend.models.trans.req.TransCommUtils sendXml
+信息: url:https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+ AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><BatchAdminRequest><SubmitterCode>8038464327</SubmitterCode><BatchOperation>01</BatchOperation><CardAcceptorDetail><CardAcptNm>PAYTENDEUROPEUAB</CardAcptNm><CardAcptStreetNm>VilniusCitysav</CardAcptStreetNm><CardAcptCityNm>Vilnius</CardAcptCityNm><CardAcptCtryCd>440</CardAcptCtryCd><CardAcptRgnCd>58</CardAcptRgnCd><CardAcptPostCd>01113</CardAcptPostCd></CardAcceptorDetail><MerId>8127478295</MerId><BatchID>100000</BatchID><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId></BatchAdminRequest>
+Cache-Control = no-cache
+User-Agent = Application;
+Connection = Keep-Alive
+Content-Type = plain/text
+Origin = Paytend
+Message = GFSG XML BAR
+MerchNbr = 8127478295
+RtInd = 015
+Country = 978
+Host = https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+region = EMEA
+十月 10, 2023 3:28:10 下午 io.aexp.api.client.core.TestNCP9000PRO testBatchDataOpen
+信息: batchOpenResp:BatchResp(version=12010000, merId=8127478295, merTrmnlId=00000001, batchID=100000, batchStatus=000, batchStatusText=Open)
+
+
+
+十月 10, 2023 3:49:15 下午 io.aexp.api.client.core.TestNCP9000PRO testDataCaptureRequest
+信息: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DataCapture batchID 100000  RefNumber 6084770190328 TransProcCd 000000 TransId 006084770190328 TransAprvCd 897820  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+十月 10, 2023 3:49:15 下午 io.aexp.api.client.core.TestNCP9000PRO testDataCaptureRequest
+信息: dataCaptureRequest:AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><CardNbr>378330600475458</CardNbr><TransProcCd>000000</TransProcCd><TransAmt>100</TransAmt><PointOfServiceData><CardDataInpCpblCd>1</CardDataInpCpblCd><CardCptrCpblCd>0</CardCptrCpblCd><OprEnvirCd>0</OprEnvirCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>1</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><MerCtgyCd>7996</MerCtgyCd><TransId>006084770190328</TransId><TransCurrCd>978</TransCurrCd><RefNumber>6084770190328</RefNumber><TransDt>20231010</TransDt><ElecComrceInd>05</ElecComrceInd><TransAprvCd>897820</TransAprvCd><SellId>900000000000001</SellId><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><BatchID>100000</BatchID><MerId>8127478295</MerId></DataCaptureRequest>
+十月 10, 2023 3:49:16 下午 com.paytend.models.trans.req.TransCommUtils sendXml
+信息: url:https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+ AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><CardNbr>378330600475458</CardNbr><TransProcCd>000000</TransProcCd><TransAmt>100</TransAmt><PointOfServiceData><CardDataInpCpblCd>1</CardDataInpCpblCd><CardCptrCpblCd>0</CardCptrCpblCd><OprEnvirCd>0</OprEnvirCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>1</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><MerCtgyCd>7996</MerCtgyCd><TransId>006084770190328</TransId><TransCurrCd>978</TransCurrCd><RefNumber>6084770190328</RefNumber><TransDt>20231010</TransDt><ElecComrceInd>05</ElecComrceInd><TransAprvCd>897820</TransAprvCd><SellId>900000000000001</SellId><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><BatchID>100000</BatchID><MerId>8127478295</MerId></DataCaptureRequest>
+Cache-Control = no-cache
+User-Agent = Application;
+Connection = Keep-Alive
+Content-Type = plain/text
+Origin = Paytend
+Message = GFSG XML DCR
+MerchNbr = 8127478295
+RtInd = 015
+Country = 978
+Host = https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+region = EMEA
+十月 10, 2023 3:49:22 下午 io.aexp.api.client.core.TestNCP9000PRO testDataCaptureRequest
+信息: dataCaptureResponse:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - DataCapture Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<DataCaptureResponse>
+  <Version>12010000</Version>
+  <MerId>8127478295</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100000</BatchID>
+  <RefNumber>6084770190328</RefNumber>
+  <StatusCode>000</StatusCode>
+  <StatusText>DataCaptureRequest request successful.</StatusText>
+</DataCaptureResponse>
+
+
+
+十月 10, 2023 3:51:12 下午 io.aexp.api.client.core.TestNCP9000PRO testDataCaptureRequest
+信息: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DataCapture batchID 100000  RefNumber 6099677590321 TransProcCd 000000 TransId 006099677590321 TransAprvCd 048073  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+十月 10, 2023 3:51:13 下午 io.aexp.api.client.core.TestNCP9000PRO testDataCaptureRequest
+信息: dataCaptureRequest:AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><CardNbr>378330600475458</CardNbr><TransProcCd>000000</TransProcCd><TransAmt>10100</TransAmt><PointOfServiceData><CardDataInpCpblCd>1</CardDataInpCpblCd><CardCptrCpblCd>0</CardCptrCpblCd><OprEnvirCd>0</OprEnvirCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>1</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><MerCtgyCd>7996</MerCtgyCd><TransId>006099677590321</TransId><TransCurrCd>978</TransCurrCd><RefNumber>6099677590321</RefNumber><TransDt>20231010</TransDt><TransAprvCd>048073</TransAprvCd><ElecComrceInd>05</ElecComrceInd><SellId>900000000000001</SellId><MerId>8127478295</MerId><MerTrmnlId>00000001</MerTrmnlId><Version>12010000</Version><BatchID>100000</BatchID></DataCaptureRequest>
+十月 10, 2023 3:51:13 下午 com.paytend.models.trans.req.TransCommUtils sendXml
+信息: url:https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+ AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><DataCaptureRequest><CardNbr>378330600475458</CardNbr><TransProcCd>000000</TransProcCd><TransAmt>10100</TransAmt><PointOfServiceData><CardDataInpCpblCd>1</CardDataInpCpblCd><CardCptrCpblCd>0</CardCptrCpblCd><OprEnvirCd>0</OprEnvirCd><CardPresentCd>0</CardPresentCd><CardDataInpModeCd>1</CardDataInpModeCd><CardDataOpCpblCd>0</CardDataOpCpblCd><TrmnlOpCpblCd>1</TrmnlOpCpblCd><CMAuthnCpblCd>6</CMAuthnCpblCd><CMPresentCd>1</CMPresentCd><CMAuthnMthdCd>0</CMAuthnMthdCd><CMAuthnEnttyCd>0</CMAuthnEnttyCd><PINCptrCpblCd>0</PINCptrCpblCd></PointOfServiceData><MerCtgyCd>7996</MerCtgyCd><TransId>006099677590321</TransId><TransCurrCd>978</TransCurrCd><RefNumber>6099677590321</RefNumber><TransDt>20231010</TransDt><TransAprvCd>048073</TransAprvCd><ElecComrceInd>05</ElecComrceInd><SellId>900000000000001</SellId><MerId>8127478295</MerId><MerTrmnlId>00000001</MerTrmnlId><Version>12010000</Version><BatchID>100000</BatchID></DataCaptureRequest>
+Cache-Control = no-cache
+User-Agent = Application;
+Connection = Keep-Alive
+Content-Type = plain/text
+Origin = Paytend
+Message = GFSG XML DCR
+MerchNbr = 8127478295
+RtInd = 015
+Country = 978
+Host = https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+region = EMEA
+十月 10, 2023 3:51:20 下午 io.aexp.api.client.core.TestNCP9000PRO testDataCaptureRequest
+信息: dataCaptureResponse:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - DataCapture Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<DataCaptureResponse>
+  <Version>12010000</Version>
+  <MerId>8127478295</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100000</BatchID>
+  <RefNumber>6099677590321</RefNumber>
+  <StatusCode>000</StatusCode>
+  <StatusText>DataCaptureRequest request successful.</StatusText>
+</DataCaptureResponse>
+
+
+
+十月 10, 2023 3:54:16 下午 io.aexp.api.client.core.TestNCP9000PRO testBatchDataClose
+信息: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> batchClose:100000
+十月 10, 2023 3:54:17 下午 io.aexp.api.client.core.TestNCP9000PRO testBatchDataClose
+信息: BatchDataClose:AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><BatchAdminRequest><CardAcceptorDetail><CardAcptNm>PAYTENDEUROPEUAB</CardAcptNm><CardAcptStreetNm>VilniusCitysav</CardAcptStreetNm><CardAcptCityNm>Vilnius</CardAcptCityNm><CardAcptCtryCd>440</CardAcptCtryCd><CardAcptRgnCd>58</CardAcptRgnCd><CardAcptPostCd>01113</CardAcptPostCd></CardAcceptorDetail><BatchOperation>02</BatchOperation><SubmitterCode>8038464327</SubmitterCode><BatchID>100000</BatchID><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><MerId>8127478295</MerId></BatchAdminRequest>
+十月 10, 2023 3:54:17 下午 com.paytend.models.trans.req.TransCommUtils sendXml
+信息: url:https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+ AuthorizationRequestParam=<?xml version="1.0" encoding="utf-8"?><BatchAdminRequest><CardAcceptorDetail><CardAcptNm>PAYTENDEUROPEUAB</CardAcptNm><CardAcptStreetNm>VilniusCitysav</CardAcptStreetNm><CardAcptCityNm>Vilnius</CardAcptCityNm><CardAcptCtryCd>440</CardAcptCtryCd><CardAcptRgnCd>58</CardAcptRgnCd><CardAcptPostCd>01113</CardAcptPostCd></CardAcceptorDetail><BatchOperation>02</BatchOperation><SubmitterCode>8038464327</SubmitterCode><BatchID>100000</BatchID><Version>12010000</Version><MerTrmnlId>00000001</MerTrmnlId><MerId>8127478295</MerId></BatchAdminRequest>
+Cache-Control = no-cache
+User-Agent = Application;
+Connection = Keep-Alive
+Content-Type = plain/text
+Origin = Paytend
+Message = GFSG XML BAR
+MerchNbr = 8127478295
+RtInd = 015
+Country = 978
+Host = https://www359.americanexpress.com/IPPayments/inter/CardAuthorization.do
+region = EMEA
+十月 10, 2023 3:54:25 下午 io.aexp.api.client.core.TestNCP9000PRO testBatchDataClose
+信息: BatchDataCloseResp:<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<!-- American Express Co., Inc. - BatchAdmin Response V11020000 -->
+<!-- Content-Type: text/xml -->
+<BatchAdminResponse>
+  <Version>12010000</Version>
+  <MerId>8127478295</MerId>
+  <MerTrmnlId>00000001</MerTrmnlId>
+  <BatchID>100000</BatchID>
+  <BatchStatus>001</BatchStatus>
+  <BatchStatusText>Close</BatchStatusText>
+</BatchAdminResponse>
