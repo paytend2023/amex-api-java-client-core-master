@@ -1,4 +1,4 @@
-package io.aexp.api.client.core.security.authentication;
+package io.aexp.api.client.core;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DateUtil;
@@ -9,6 +9,9 @@ import com.paytend.models.trans.req.AcptEnvData.Psd2Exemptions;
 import io.aexp.api.client.core.configuration.ConfigurationKeys;
 import io.aexp.api.client.core.configuration.ConfigurationProvider;
 import io.aexp.api.client.core.configuration.PropertiesConfigurationProvider;
+import io.aexp.api.client.core.security.authentication.AuthProvider;
+import io.aexp.api.client.core.security.authentication.HmacAuthBuilder;
+import io.aexp.api.client.core.security.authentication.QATest;
 import io.aexp.api.client.core.utils.XmlUtility;
 import okhttp3.*;
 import org.junit.Before;
@@ -142,11 +145,14 @@ public class AuthorizationNCPTest {
         sendNCP(pan, amt, pointOfServiceDataBuilder, null);
     }
 
+
     @Test
     public void testNCP4014() throws Exception {
         long pan = 341111599241001L;  //341111599241000L module 10 check passed
         long amt = 2000;
-        sendNCP(pan, amt, pointOfServiceDataBuilder, null);
+        //        mod10 检查不能发送请求
+//        sendNCP(pan, amt, pointOfServiceDataBuilder, null);
+
     }
 
 
@@ -309,6 +315,7 @@ public class AuthorizationNCPTest {
     public void testModule10() throws Exception {
         assertTrue(checkModule10(374245005741003L));
         assertFalse(checkModule10(374245005741004L));
+        assertFalse(checkModule10(341111599241001L));
         System.out.println(checkModule10(341111599241000L));
     }
 

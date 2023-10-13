@@ -1,4 +1,4 @@
-package io.aexp.api.client.core.security.authentication;
+package io.aexp.api.client.core;
 
 import cn.hutool.core.date.DateUtil;
 import com.paytend.models.trans.req.*;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
-
 
 /**
  * validationPCO.getAEVVDecryptedData(aevvValue, pan, key)
@@ -152,6 +151,9 @@ public class SafeKeyTest {
                         .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
                         .acptEnvDataBuilder(acptEnvDataBuilder)
                         .build();
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
 
         long pan = 374500261001009L;
         pan = 376701078252003L;
@@ -164,8 +166,6 @@ public class SafeKeyTest {
                 .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
         AuthorizationFactory factory = new AuthorizationFactory(config);
         Authorization authorization = factory.create();
-        System.out.println(authorization.toXMLString());
-        TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
         System.out.println(authorization.toXMLString());
         String responseStr = TransCommUtils.sendXml(authorization.toXMLString(), Header.defaultHeaders());
         AuthorizationRsp response = XmlUtility.getInstance().readFromXML(responseStr, AuthorizationRsp.class);
@@ -263,7 +263,9 @@ public class SafeKeyTest {
                         .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
                         .acptEnvDataBuilder(acptEnvDataBuilder)
                         .build();
-
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
         long pan = 374500261001009L;
         long amt = 1600;
         String tmp = "000000" + new Random().nextLong();
@@ -374,7 +376,9 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("06")
                 .AmexExpVerificationValTxt("0700010748123482785768480609560000000000");
-
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
 
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
@@ -481,7 +485,9 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("06")
                 .AmexExpVerificationValTxt("0700010748123482785768480609560000000000");
-
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
         //yyyyMMddhh24miss
 
         String tmp = "000000" + new Random(System.currentTimeMillis()).nextInt(999999);
@@ -590,8 +596,11 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("06")
                 .AmexExpVerificationValTxt("0800980748123482785768480609560000000000");
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
 
-        String tmp = "000000" + new Random().nextLong();
+         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
                 .MerSysTraceAudNbr(tmp.substring(tmp.length() - 6));
@@ -688,7 +697,9 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("06")
                 .AmexExpVerificationValTxt("0800980748123482785768480609560000000000");
-
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
@@ -775,7 +786,6 @@ public class SafeKeyTest {
                         .build();
 
 
-
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
@@ -806,7 +816,7 @@ public class SafeKeyTest {
      * ECI: 05<br/>AEVV Result: U<br/>Return Action Code: 000<br/></p><p>STATIC: Use the AEVV Value indicated in the Host Validation section.
      * <br/><br/>DYNAMIC: The AEVV Value comes from the STL<br/>Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>
      * String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/></p><!--StartFragment--><p style=""font-size: 12px;""><i><u>
-     *     This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
+     * This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
      * </u></i></p><p style=""font-size: 12px;""><i><u>If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.
      * </u></i></p>
      * <p>
@@ -881,7 +891,9 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
-
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
@@ -906,8 +918,12 @@ public class SafeKeyTest {
      * Safekey N   "<p><span style=""font-size: 12px;float: none;"">SafeKey 1.0</span>
      * Use PAN:374500262001008 </p><p><span style=""font-size: 12px;float: none;"">
      * SafeKey 2.0 Use PAN: </span> 375987000169578<br/>Transaction Amount: 8100 - 9000 (e.g. $81.00 - $90.00)<br/>ECI: 06<br/>
-     * AEVV Result: U<br/>Return Action Code: 000<br/></p><p>STATIC: Use the AEVV Value indicated in the Host Validation section. <br/><br/>
-     * DYNAMIC: The AEVV Value comes from the STL<br/>Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/></p><!--StartFragment--><p style=""font-size: 12px;""><i><u>This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.</u></i></p><p style=""font-size: 12px;""><i><u>If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.</u></i></p>
+     * AEVV Result: U<br/>Return Action Code: 000<br/></p><p>
+     *     STATIC: Use the AEVV Value indicated in the Host Validation section. <br/><br/>
+     * DYNAMIC: The AEVV Value comes from the STL<br/>
+     * Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/></p><!--StartFragment--><p style=""font-size: 12px;""><i><u>
+     *     This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
+     * </u></i></p><p style=""font-size: 12px;""><i><u>If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.</u></i></p>
      * ECI: 06
      * SafeKey AEVV Value :  BwABB0gSNIJ4V2hIBglWAAAAAAA=
      * Check for presence of SafeKey Transaction Id (XID)
@@ -979,7 +995,9 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("06")
                 .AmexExpVerificationValTxt("0700010748123482785768480609560000000000");
-
+        secureAuthenticationSafeKeyBuilder
+                .AESKTransId("3132333435363738393031323334353637383930")
+        ;
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
@@ -995,8 +1013,9 @@ public class SafeKeyTest {
 
     /**
      * Test case description
-     * SK09 - SafeKey AEVV & XID - ECI 06 - Third Party Processor  "Static:
-     * Test a Card Not Present SafeKey 1100 Authorization Request with ECI 06 and convert the SafeKey AEVV value and XID value listed in the Host Validations section.  An Approve response is sent in the 1110 Authorization Response  with AEVV Validation Result. .
+     * SK09 - SafeKey AEVV & XID - ECI 06 - Third Party Processor  Static:
+     * Test a Card Not Present SafeKey 1100 Authorization Request with ECI 06 and convert the SafeKey AEVV value and
+     * XID value listed in the Host Validations section. An Approve response is sent in the 1110 Authorization Response  with AEVV Validation Result. .
      * <p>
      * instructions
      * Dynamic:
@@ -1004,7 +1023,18 @@ public class SafeKeyTest {
      * Dynamically convert the AEVV and XID  Value received from the STL.
      * An Approve response is sent in the 1110 Authorization Response with AEVV Validation Result."
      * Safekey N   "<p><span style=""font-size: 12px;float: none;"">SafeKey 1.0 </span>Use PAN:  374500262001008 </p><p><span style=""font-size: 12px;float: none;"">
-     *     SafeKey 2.0 Use PAN: </span> 375987000169578<br/>Transaction Amount: 9100 - 9500 (e.g. $91.00 - $95.00)<br/>ECI: 06<br/>AEVV Result: 2<br/>Return Action Code: 000<br/></p><p>STATIC: Use the AEVV Value indicated in the Host Validation section. <br/><br/>DYNAMIC: The AEVV Value comes from the STL<br/>Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/></p><!--StartFragment--><p style=""font-size: 12px;""><i><u>This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.</u></i></p><p style=""font-size: 12px;""><i><u>If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.</u></i></p>
+     * SafeKey 2.0 Use PAN: </span> 375987000169578<br/>
+     * Transaction Amount: 9100 - 9500 (e.g. $91.00 - $95.00)<br/>
+     * ECI: 06<br/>AEVV Result: 2
+     * <br/>Return Action Code: 000<br/></p><p>
+     *     STATIC: Use the AEVV Value indicated in the Host Validation section.
+     *     <br/><br/>DYNAMIC: The AEVV Value comes from the STL<br/>
+     *     Example: PARes - AmEx Verification Value=AAABAURAWAAAAAAAAEBYAAAAAAA=<br/>String: AAABAURAWAAAAAAAAEBYAAAAAAA=<br/><br/>
+     * </p><p style=""font-size: 12px;""><i><u>
+     *     This test case is NOT to be used for AAV (Address Verification) or CID (4DBC) Certification.
+     * </u></i></p><p style=""font-size: 12px;""><i><u>
+     *     If AAV and/or CID Data is present an 'Unchecked' response will be sent back in the 1110 Authorization Response.
+     * </u></i></p>
      * <p>
      * host validation
      * ECI: 06
@@ -1076,9 +1106,8 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("06")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000")
-                .AESKTransId("1234567890ABCDEF1234")
+                .AESKTransId("3132333435363738393031323334353637383930")
         ;
-        //
 
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
@@ -1178,7 +1207,7 @@ public class SafeKeyTest {
                 .ScndIdCd("ASK")
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000")
-                .AESKTransId("1234567890ABCDEF1234")
+                .AESKTransId("1234567890ABCDEF12341234567890ABCDEF1234")
         ;
 
         String tmp = "000000" + new Random().nextLong();

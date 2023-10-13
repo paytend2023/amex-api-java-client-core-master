@@ -1,6 +1,15 @@
-package io.aexp.api.client.core.security.authentication;
+package io.aexp.api.client.core;
 
+import cn.hutool.core.date.DateUtil;
+import com.paytend.models.trans.req.*;
+import com.paytend.models.trans.rsp.AuthorizationRsp;
+import io.aexp.api.client.core.utils.XmlUtility;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
 
 public class AXPEmvTest {
     /**
@@ -14,7 +23,7 @@ public class AXPEmvTest {
      * Receipt (Y/N):N
      * <p>
      * INSTRUCTION
-     * "<p>validate that l1 is current and upload a copy under ‘documents’ tab in the ‘dashboard’ section of your ats project</p>
+     * <p>validate that l1 is current and upload a copy under ‘documents’ tab in the ‘dashboard’ section of your ats project</p>
      * <p>validate that l2 is current and upload a copy under ‘documents’ tab in the ‘dashboard’ section of your ats project</p>
      * <p>if applicable, validate pci is current and upload a copy under ‘documents’ tab in the ‘dashboard’ section of your ats project</p>
      * <p>if applicable, upload copy of letter of attestation for terminal family under ‘documents’ tab in the ‘dashboard’ section of your ats project</p>
@@ -47,7 +56,7 @@ public class AXPEmvTest {
      * RECEIPT: Y
      * <p>
      * INSTRUCTION
-     * "Initiate a sale transaction
+     * Initiate a sale transaction
      * Transaction amount =30.00 (£/$/€) or 300.00 (Peso)
      * Swipe the AEIPS 20 Card
      * Insert card when prompted
@@ -1078,4 +1087,5 @@ public class AXPEmvTest {
     public void testAXPEMV031() {
 
     }
+
 }

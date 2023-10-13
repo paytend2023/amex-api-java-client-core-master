@@ -27,6 +27,7 @@ public class AuthorizationFactory {
         CardAcceptorDetail.CardAcceptorDetailBuilder cardAcceptorDetailBuilder;
         CardNotPresentData.CardNotPresentDataBuilder cardNotPresentDataBuilder;
         AcptEnvData.AcptEnvDataBuilder acptEnvDataBuilder;
+        NatlUseData.NatlUseDataBuilder natlUseDataBuilder;
     }
 
 
@@ -54,6 +55,10 @@ public class AuthorizationFactory {
 
         if (config.secureAuthenticationSafeKeyBuilder != null) {
             authorizationBuilder.SecureAuthenticationSafeKey(config.secureAuthenticationSafeKeyBuilder.build());
+        }
+
+        if (config.natlUseDataBuilder != null) {
+            authorizationBuilder.NatlUseData(config.natlUseDataBuilder.build());
         }
 
         buildTransTs(authorizationBuilder);

@@ -1,5 +1,9 @@
 package com.paytend.models.trans.req;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.experimental.Tolerate;
+
 /**
  * ISO 8583 Bit # / Data Element: Data Length:
  * Data Element Type:
@@ -18,13 +22,22 @@ package com.paytend.models.trans.req;
  * • Mandatory—WhenNationalIDvalueisrequired
  * • Conditional—Transactionoriginatedusingamobiledevice • Notused—Allothertransactions
  * Global — All regions
- * Mandatory — Third Party Processors, OptBlue Participants, Bill Payment Providers and/or Vendors must be certified to pass data in the sub-elements related to this container element. After certification, all Merchant-provided data must be forwarded.
- * This container element supports three types of transaction processing: Payment Facilitator, OptBlue Participant, Bill Pay Provider Data and Payment Token. These three types of transactions can be sent together or separately.
+ * Mandatory — Third Party Processors, OptBlue Participants, Bill Payment Providers and/or Vendors must be certified to
+ * pass data in the sub-elements related to this container element. After certification, all Merchant-provided data must be forwarded.
+ * <p>
+ * This container element supports three types of transaction processing: Payment Facilitator, OptBlue Participant,
+ * Bill Pay Provider Data and Payment Token. These three types of transactions can be sent together or separately.
+ * <p>
  * This container element consists of five sub-elements listed in the following example.
  * Payment Facilitator, OptBlue Participants and Bill Payment Providers
- * The sub-elements CardAcptSellerId, CardAcptEmailIAddr and CardAcptPhoneNbr support Payment Facilitator, OptBlue Participant and Bill Pay Provider data. These sub-elements should be used in conjunction with the Bit 43, CardAcceptorDetail, Payment Facilitator and OptBlue Participant format.
+ * <p>
+ * The sub-elements CardAcptSellerId, CardAcptEmailIAddr and CardAcptPhoneNbr support Payment Facilitator, OptBlue Participant and Bill Pay Provider data.
+ * These sub-elements should be used in conjunction with the Bit 43, CardAcceptorDetail, Payment Facilitator and OptBlue Participant format.
+ *
  * @author gudongyang
  */
+@Builder
+@Getter
 public class NatlUseData {
     String CardAcptSellerId;
     String CardAcptEmailIAddr;
@@ -34,6 +47,10 @@ public class NatlUseData {
     String OriginalTransId;
     String TrmnlClassificationCd;
     String NatlIdentfctnDocmnt;
+
+    @Tolerate
+    public NatlUseData() {
+    }
 }
 
 

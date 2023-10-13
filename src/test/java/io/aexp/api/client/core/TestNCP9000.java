@@ -1,4 +1,4 @@
-package io.aexp.api.client.core.security.authentication;
+package io.aexp.api.client.core;
 
 import cn.hutool.core.date.DateUtil;
 import com.paytend.models.trans.req.*;
@@ -268,25 +268,28 @@ public class TestNCP9000 {
         Assert.assertEquals(response.getTransActCd(), "000");
     }
 
+
     /**
-     * TEST CASE DESCRIPTION
-     * 9054- CNP - Remote Transaction
-     * Merchant Initiated Recurring Billing Transaction
+     * 9054 - CNP - Remote Transaction : Merchant Initiated Recurring Billing Transaction
      * Test a Card Not Present 1100 Authorization Request CIT transaction with Recurring Billing MIT Request.
      * An Approved response is sent in the 1110 Authorization Response.
-     * "Initiate a CIT (Customer Initiated Transaction) for Recurring Billing
+     * <p>
+     * CIT
+     * N
+     * <p>
+     * Initiate a CIT (Customer Initiated Transaction) for Recurring Billing
      * Use PAN: 374500261001009
      * Transaction amount: $100 - $1000 ($1.00 - 10.00)
      * Returned Action Code: 000
      * <p>
-     * user valdation
+     * USER VALIDATION
      * American Express application was selected.
      * System displayed ""Enter Card"" or similar.
      * Card Expiry date was requested.
      * Transaction amount was requested.
      * Transaction was approved.
      * <p>
-     * host validation
+     * HOST VALIDATION
      * The transaction reflects a Customer Initiated Transaction
      * POS Data Code represents a Card Not Present transaction.
      * InitPartyInd reflects a Customer Initiated Transaction.
@@ -295,13 +298,12 @@ public class TestNCP9000 {
      * Bit 22.5 - CMPresentCd represents a CNP transaction.
      * Bit 22.6 - CardPresentCd represents a CNP transaction.
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
+     *
+     * @throws Exception
      */
-
-    //000002493782263
-    @Test
-    public void test9054CIT() throws Exception {
+    private AuthorizationRsp test9054CIT() throws Exception {
         long pan = 374500261001009L;
-        long amt = 100;
+        long amt = 106;
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
@@ -317,8 +319,8 @@ public class TestNCP9000 {
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
 
-        pointOfServiceDataBuilder.CMPresentCd("2");
-        acptEnvDataBuilder.InitPartyInd("1");
+        pointOfServiceDataBuilder.CMPresentCd("1");
+        acptEnvDataBuilder.InitPartyInd("0");
 
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
@@ -332,11 +334,15 @@ public class TestNCP9000 {
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
         Assert.assertEquals(response.getTransActCd(), "000");
+        return response;
     }
 
     /**
      * 9054 - CNP - Remote Transaction
-     * Merchant Initiated Recurring Billing Transaction  Test a Card Not Present 1100 Authorization Request CIT transaction with Recurring Billing MIT Request.  An Approved response is sent in the 1110 Authorization Response.
+     * Merchant Initiated Recurring Billing Transaction
+     * <p>
+     * Test a Card Not Present 1100 Authorization Request CIT transaction with Recurring Billing MIT Request.
+     * An Approved response is sent in the 1110 Authorization Response.
      * <p>
      * MIT
      * N
@@ -358,33 +364,39 @@ public class TestNCP9000 {
      * DF60.7 (OTID) is equal to DF31 (TID) from CIT response.
      * OTID is equal to TID from CIT response.
      * InitPartyInd reflects a Merchant Initiated Transaction
-     * Bit 22.1: CardDataInpCpblCd represents a CNP transaction
+     * Bit 22.1:  CardDataInpCpblCd represents a CNP transaction
      * Bit 22.4 - OprEnvirCd is represented as a CNP transaction.
      * Bit 22.5 - CMPresentCd represents a CNP Recurring Billing transaction.
      * Bit 22.6 - CardPresentCd represents a CNP transaction.
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
-    @Test
-    public void test9054MIT() throws Exception {
+    public void test9054MIT(String originalTransId) throws Exception {
+        //374500261001009
         long pan = 374500261001009L;
-        long amt = 100;
+        long amt = 105;
+        NatlUseData.NatlUseDataBuilder natlUseDataBuilder = NatlUseData.builder();
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
                         .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
-                        //.secureAuthenticationSafeKeyBuilder(secureAuthenticationSafeKeyBuilder)
                         .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
                         .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
                         .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
                         .acptEnvDataBuilder(acptEnvDataBuilder)
+                        .natlUseDataBuilder(natlUseDataBuilder)
                         .build();
 
+        natlUseDataBuilder.OriginalTransId(originalTransId);
+        authorizationBuilder.RtrvRefNbr(DateUtil.format(new Date(), "yyyyMMddHHmmss").substring(2));
         secureAuthenticationSafeKeyBuilder.ScndIdCd("ASK")
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
 
-        pointOfServiceDataBuilder.CMPresentCd("9");
+        //MIT
         acptEnvDataBuilder.InitPartyInd("1");
+        //RECURRING billing
+        pointOfServiceDataBuilder.CMPresentCd("9");
+
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
@@ -397,6 +409,17 @@ public class TestNCP9000 {
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
         Assert.assertEquals(response.getTransActCd(), "000");
+    }
+
+    @Test
+
+    public void test9054() throws Exception {
+
+        AuthorizationRsp authorizationRsp = test9054CIT();
+//        test9054MIT("000002498254792");
+        test9054MIT(authorizationRsp.getTransId());
+
+
     }
 
     /**
@@ -430,15 +453,13 @@ public class TestNCP9000 {
      * Bit 22.6 - CardPresentCd represents a CNP transaction.
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
-    @Test
-    public void test9056CIT() throws Exception {
-        long pan = 374500261001009L;
+    public AuthorizationRsp test9056CIT() throws Exception {
+        long pan = 374500262001008L;
         long amt = 600;
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
                         .pointOfServiceDataBuilder(pointOfServiceDataBuilder)
-                        //.secureAuthenticationSafeKeyBuilder(secureAuthenticationSafeKeyBuilder)
                         .cardAcceptorIdentificationBuilder(cardAcceptorIdentificationBuilder)
                         .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
                         .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
@@ -448,9 +469,8 @@ public class TestNCP9000 {
         secureAuthenticationSafeKeyBuilder.ScndIdCd("ASK")
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
-
-        pointOfServiceDataBuilder.CMPresentCd("9");
-
+        acptEnvDataBuilder.InitPartyInd("0");
+        pointOfServiceDataBuilder.CMPresentCd("1");
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
                 .TransAmt(String.valueOf(amt))
@@ -463,17 +483,18 @@ public class TestNCP9000 {
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
         Assert.assertEquals(response.getTransActCd(), "000");
+        return response;
     }
 
     /**
      * 9056 - CNP - Remote Transaction CIT with subsequent MIT (Non-US Customers Only)
-
+     * <p>
      * Test a Card Not Present 1100 Authorization Request supporting a CIT transaction with subsequent MIT.
      * An Approved response is sent in the 1110 Authorization Response.
-     *
+     * <p>
      * MIT
      * N
-     *
+     * <p>
      * Initiate a MIT (Merchant Initiated Transaction)
      * Use PAN: 374500262001008
      * Transaction amount:  $600 - $1000 ($6.00 - 10.00)
@@ -499,10 +520,11 @@ public class TestNCP9000 {
      * Bit 22.6 - CardPresentCd represents a CNP transaction.
      * Bit 22.7 - CardDataInpModeCd represents a CNP transaction.
      */
-    @Test
-    public void test9056MIT() throws Exception {
+    public AuthorizationRsp test9056MIT(String originalTransId) throws Exception {
         long pan = 374500262001008L;
         long amt = 600;
+
+        NatlUseData.NatlUseDataBuilder natlUseDataBuilder = NatlUseData.builder();
         AuthorizationFactory.AuthorizationConfig config =
                 AuthorizationFactory.AuthorizationConfig.builder()
                         .authorizationBuilder(authorizationBuilder)
@@ -512,13 +534,15 @@ public class TestNCP9000 {
                         .cardAcceptorDetailBuilder(cardAcceptorDetailBuilder)
                         .cardNotPresentDataBuilder(cardNotPresentDataBuilder)
                         .acptEnvDataBuilder(acptEnvDataBuilder)
+                        .natlUseDataBuilder(natlUseDataBuilder)
                         .build();
 
+        natlUseDataBuilder.OriginalTransId(originalTransId);
         secureAuthenticationSafeKeyBuilder.ScndIdCd("ASK")
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
 
-        pointOfServiceDataBuilder.CMPresentCd("9");
+        pointOfServiceDataBuilder.CMPresentCd("1");
         acptEnvDataBuilder.InitPartyInd("1");
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
@@ -532,6 +556,14 @@ public class TestNCP9000 {
         System.out.println(response);
         Assert.assertNotEquals(response.getTransActCd(), "181");
         Assert.assertEquals(response.getTransActCd(), "000");
+        return response;
+    }
+
+
+    @Test
+    public void test9056() throws Exception {
+        AuthorizationRsp response = test9056CIT();
+        test9056MIT(response.getTransId());
     }
 
     /**
@@ -649,6 +681,7 @@ public class TestNCP9000 {
                 .ElecComrceInd("05")
                 .AmexExpVerificationValTxt("0000010567123487637946538663470000000000");
 
+        pointOfServiceDataBuilder.CMPresentCd("1");
 
         String tmp = "000000" + new Random().nextLong();
         authorizationBuilder.CardNbr(String.valueOf(pan))
