@@ -11,10 +11,9 @@ import okhttp3.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.io.IOException;
+import java.net.URL;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -46,12 +45,16 @@ public class QATest {
         httpClient = new OkHttpClient.Builder().sslSocketFactory(sslContext.getSocketFactory(), new X509TrustManager() {
             @Override
             public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-
+                for (int i = 0; i < x509Certificates.length; i++) {
+                    System.out.print(x509Certificates[i]);
+                }
             }
 
             @Override
             public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-
+                for (int i = 0; i < x509Certificates.length; i++) {
+                    System.out.print(x509Certificates[i]);
+                }
             }
 
             @Override
@@ -754,6 +757,29 @@ public class QATest {
         assertTrue(response.isSuccessful());
 
         return tmp;
+    }
+
+
+    @Test
+    public   void testPringcerts( ) {
+        String url = "https://apigateway2sma-qa.americanexpress.com"; // 替换成你要访问的HTTPS网址
+
+        try {
+            // 创建URL对象
+            URL serverUrl = new URL(url);
+            // 打开HTTPS连接
+            HttpsURLConnection connection = (HttpsURLConnection) serverUrl.openConnection();
+            connection.connect();
+            // 获取服务器证书链
+            java.security.cert.Certificate [] certs = connection.getServerCertificates();
+            connection.disconnect();
+            // 打印证书链信息
+            for (java.security.cert.Certificate cert : certs) {
+                System.out.println("Certificate: " + cert);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
